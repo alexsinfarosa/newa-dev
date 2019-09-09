@@ -8,7 +8,7 @@ const Link = React.forwardRef(function Link(props, ref) {
       component={GatsbyLink}
       ref={ref}
       {...props}
-      style={{ textDecoration: "none" }}
+      // style={{ textDecoration: "none" }}
     />
   )
 })

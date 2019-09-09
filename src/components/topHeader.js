@@ -42,7 +42,7 @@ const Header = ({ siteTitle }) => {
 
   return (
     <Box
-      bgcolor="background.offWhite"
+      bgcolor="background.fafafa"
       px={4}
       py={1}
       display="flex"
@@ -75,7 +75,7 @@ const Header = ({ siteTitle }) => {
           Login
         </Link>
 
-        <Link to="/createAccount" className={classes.mrSm}>
+        <Link to="/createAccount" className={classes.mrSm} underline="none">
           <Fab
             variant="extended"
             aria-label="create account"
