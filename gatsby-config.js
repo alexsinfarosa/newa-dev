@@ -5,7 +5,6 @@ module.exports = {
     author: `@alexsinfarosa`,
   },
   plugins: [
-    "gatsby-plugin-top-layout",
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,
@@ -19,7 +18,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `gatsby-starter-default`,
+        name: `NEWA site`,
         short_name: `starter`,
         start_url: `/`,
         background_color: `#663399`,
@@ -28,13 +27,20 @@ module.exports = {
         // icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
       },
     },
-    "gatsby-plugin-material-ui",
     {
       resolve: "gatsby-plugin-react-svg",
       options: {
         rule: {
           include: /assets/, // See below to configure properly
         },
+      },
+    },
+    `gatsby-plugin-postcss`,
+    {
+      resolve: "gatsby-plugin-purgecss",
+      options: {
+        tailwind: true,
+        purgeOnly: ["src/css/style.css"],
       },
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality
