@@ -11,16 +11,16 @@ const activeStyle = { background: "#F2F8EC", color: "#5C8832" }
 const Navigation = () => {
   return (
     <nav className="flex items-center py-6 px-10">
-      <header className="mr-auto">
-        <h1 className="text-left">
+      <header className="mr-auto bg-orange-100 w-1/3">
+        <h1>
           <Link
             to="/"
             className="rounded-full py-1 px-3 inline-block focus:outline-none focus:shadow-outline"
           >
-            <NewaLogo width={240} height="auto"></NewaLogo>
+            <NewaLogo className="w-64 h-16"></NewaLogo>
           </Link>
         </h1>
-        <div className="px-6 flex items-center text-right">
+        <div className="flex items-center items-right bg-orange-300">
           <span className="mr-2 text-gray-600">in partnership with</span>
           <a
             href="https://www.psu.edu/"
