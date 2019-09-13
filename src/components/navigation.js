@@ -2,7 +2,7 @@ import { Link } from "gatsby"
 import React from "react"
 
 import NewaLogo from "../assets/newa_logo_lg.svg"
-import Image from "../components/image"
+import Image from "./image"
 
 const linkStyle =
   "rounded-full py-4 px-6 bg-white text-gray-700 focus:outline-none focus:shadow-outline hover:text-black"
@@ -11,7 +11,7 @@ const activeStyle = "bg-primary-100 text-primary-900"
 const Navigation = () => {
   return (
     <nav className="flex items-center py-6 px-10 text-right">
-      <header className="mr-auto w-1/3">
+      <header className="mr-auto w-1/3 max-w-sm">
         <h1 className="text-left">
           <Link
             to="/"
@@ -20,7 +20,7 @@ const Navigation = () => {
             <NewaLogo className="w-64 h-16"></NewaLogo>
           </Link>
         </h1>
-        <div className="inline-flex items-center">
+        <div className="inline-flex items-center \">
           <span className="text-gray-600">in partnership with</span>
           <a
             href="https://www.psu.edu/"
@@ -28,7 +28,7 @@ const Navigation = () => {
             rel="noopener noreferrer"
             className="rounded-full py-1 px-3 focus:outline-none focus:shadow-outline"
           >
-            {/* <Image></Image> */}
+            <Image></Image>
           </a>
         </div>
       </header>
