@@ -1,18 +1,18 @@
 import { Link } from "gatsby"
 import React from "react"
 
-import NewaLogo from "../assets/newa-logo.svg"
-import pennStateLogo from "../images/Penn-State-logo.jpg"
+import NewaLogo from "../assets/newa_logo_lg.svg"
+import Image from "../components/image"
 
 const linkStyle =
   "rounded-full py-4 px-6 bg-white text-gray-700 focus:outline-none focus:shadow-outline hover:text-black"
-const activeStyle = { background: "#F2F8EC", color: "#5C8832" }
+const activeStyle = "bg-primary-100 text-primary-900"
 
 const Navigation = () => {
   return (
-    <nav className="flex items-center py-6 px-10">
-      <header className="mr-auto bg-orange-100 w-1/3">
-        <h1>
+    <nav className="flex items-center py-6 px-10 text-right">
+      <header className="mr-auto w-1/3">
+        <h1 className="text-left">
           <Link
             to="/"
             className="rounded-full py-1 px-3 inline-block focus:outline-none focus:shadow-outline"
@@ -20,26 +20,22 @@ const Navigation = () => {
             <NewaLogo className="w-64 h-16"></NewaLogo>
           </Link>
         </h1>
-        <div className="flex items-center items-right bg-orange-300">
-          <span className="mr-2 text-gray-600">in partnership with</span>
+        <div className="inline-flex items-center">
+          <span className="text-gray-600">in partnership with</span>
           <a
             href="https://www.psu.edu/"
             target="_blank"
             rel="noopener noreferrer"
             className="rounded-full py-1 px-3 focus:outline-none focus:shadow-outline"
           >
-            <img
-              src={pennStateLogo}
-              alt="Penn State Logo"
-              className="w-32 object-cover"
-            />
+            {/* <Image></Image> */}
           </a>
         </div>
       </header>
 
       <ul className="flex">
         <li className="mr-2">
-          <Link to="/" className={linkStyle} activeStyle={activeStyle}>
+          <Link to="/" className={linkStyle} activeClassName={activeStyle}>
             Home
           </Link>
         </li>
@@ -47,7 +43,7 @@ const Navigation = () => {
           <Link
             to="/weather-data"
             className={linkStyle}
-            activeStyle={activeStyle}
+            activeClassName={activeStyle}
           >
             Weather Data
           </Link>
@@ -56,7 +52,7 @@ const Navigation = () => {
           <Link
             to="/crop-and-pest-management"
             className={linkStyle}
-            activeStyle={activeStyle}
+            activeClassName={activeStyle}
           >
             Crop & Pest Management
           </Link>
@@ -65,13 +61,17 @@ const Navigation = () => {
           <Link
             to="/weather-stations"
             className={linkStyle}
-            activeStyle={activeStyle}
+            activeClassName={activeStyle}
           >
             Weather Stations
           </Link>
         </li>
         <li>
-          <Link to="/about-us" className={linkStyle} activeStyle={activeStyle}>
+          <Link
+            to="/about-us"
+            className={linkStyle}
+            activeClassName={activeStyle}
+          >
             About Us
           </Link>
         </li>
