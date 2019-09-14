@@ -20,7 +20,7 @@ const Navigation = () => {
             <NewaLogo className="w-64 h-16"></NewaLogo>
           </Link>
         </h1>
-        <div className="inline-flex items-center \">
+        <div className="inline-flex items-center">
           <span className="text-gray-600">in partnership with</span>
           <a
             href="https://www.psu.edu/"

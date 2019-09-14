@@ -17,7 +17,12 @@ const Image = () => {
 
   console.log(data)
 
-  return <Img fixed={data.partnerLogo.childImageSharp.fixed} />
+  return (
+    <Img
+      fixed={data.partnerLogo.childImageSharp.fixed}
+      alt="Penn State University"
+    />
+  )
 }
 
 export default Image
