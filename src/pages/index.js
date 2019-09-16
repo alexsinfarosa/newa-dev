@@ -2,6 +2,7 @@ import React from "react"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faSearch } from "@fortawesome/pro-solid-svg-icons"
+import { faArrowRight } from "@fortawesome/pro-regular-svg-icons"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
@@ -21,7 +22,7 @@ const IndexPage = () => (
     </div>
 
     {/* carousel section */}
-    <section className="m-4">
+    <section className="mt-4">
       <Carousel></Carousel>
     </section>
 
@@ -94,13 +95,13 @@ const IndexPage = () => (
       </div>
     </section>
 
-    {/* blocg section */}
-    <section className="mt-16 bg-blue-100" style={{ height: 800 }}>
+    {/* blog section */}
+    <section className="mt-16 px-6">
       <h3 className="text-5xl font-semibold text-gray-800 text-center">
         Recent News
       </h3>
 
-      <div className="mt-12 flex flex-wrap">
+      <div className="mt-12 flex flex-wrap -mx-4 overflow-hidden">
         {[
           "June 19, 2018",
           "September 23, 2018",
@@ -108,29 +109,45 @@ const IndexPage = () => (
           "April 8, 2017",
         ].map(d => {
           return (
-            <div className="px-2">
-              <div className="w-1/2 -mx-2">
-                <Card title={d} btnLabel="Read Article">
-                  <div className="p-4">
-                    <h3 className="text-2xl font-semibold">
-                      Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                    </h3>
-                    <p className="mt-4 text-gray-700">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Sit est quae atque quas quod temporibus voluptate libero
-                      earum. Velit, sunt autem! Voluptas perferendis in ducimus!
-                      Ipsum in accusamus delectus ipsa.
-                    </p>
-                  </div>
-                </Card>
-              </div>
+            <div className="my-4 px-4 w-1/2">
+              <Card title={d} btnLabel="Read Article">
+                <div className="p-4">
+                  <h3 className="text-2xl font-semibold">
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                  </h3>
+                  <p className="mt-4 text-gray-700">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit
+                    est quae atque quas quod temporibus voluptate libero earum.
+                    Velit, sunt autem! Voluptas perferendis in ducimus! Ipsum in
+                    accusamus delectus ipsa.
+                  </p>
+                </div>
+              </Card>
             </div>
           )
         })}
+
+        <div className="mt-16 m-auto">
+          <button className="flex items-center py-2 px-4 text-2xl bg-white text-primary-600 rounded-full border border-primary-200">
+            See All News{" "}
+            <span className="ml-3">
+              <FontAwesomeIcon icon={faArrowRight} />
+            </span>
+          </button>
+        </div>
       </div>
     </section>
 
-    <section className="mt-16">X</section>
+    <section className="p-12 mt-16 bg-primary-100">
+      <h3 className="text-4xl text-center">Disclaimer</h3>
+      <p className="w-1/2 mt-4 m-auto text-center">
+        Accuracy of the weather data is the responsibility of the owners of the
+        weather station instruments. NEWA is not responsible for accuracy of the
+        weather data collected by instruments in the network. If you notice
+        erroneous or missing weather data, contact NEWA and we will contact the
+        owner of the instrument.
+      </p>
+    </section>
 
     <section className="mt-80">X</section>
   </Layout>
