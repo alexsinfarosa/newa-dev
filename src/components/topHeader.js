@@ -5,21 +5,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCircle, faUser, faSearch } from "@fortawesome/pro-solid-svg-icons"
 
 const linkStyle =
-  "rounded-full py-4 px-6 bg-fafafa focus:outline-none focus:shadow-outline hover:underline"
-const activeStyle = {
-  background: "#F2F8EC",
-  color: "#5C8832",
-  cursor: "default",
-}
+  "text-gray-700 py-4 px-5 font-medium hover:no-underline hover:text-secondary-800"
+const activeLinkStyle = "text-secondary-800 font-medium cursor-default"
 
-const TopHeader = ({ siteTitle }) => (
-  <div className="flex items-center py-3 px-10 bg-fafafa">
+const TopHeader = () => (
+  <div className="flex items-center py-3 px-6 bg-gray-100">
     <div className="flex items-center mr-auto">
       <b className="mr-1">Website Status</b>
       <FontAwesomeIcon
         icon={faCircle}
         size="xs"
-        className="mr-1 fill-current text-primary-500"
+        className="mr-1 fill-current text-green-500"
       />
       <span className="text-gray-700">
         No Problems Reported {new Date().toLocaleDateString()}{" "}
@@ -28,30 +24,45 @@ const TopHeader = ({ siteTitle }) => (
     </div>
 
     <ul className="flex items-center">
-      <li className="mr-4">
-        <Link to="/blog" className={linkStyle} activeStyle={activeStyle}>
+      <li>
+        <Link
+          to="/blog"
+          className={linkStyle}
+          activeClassName={activeLinkStyle}
+        >
           NEWA Blog
         </Link>
       </li>
-      <li className="mr-4">
-        <Link to="/help" className={linkStyle} activeStyle={activeStyle}>
+      <li>
+        <Link
+          to="/help"
+          className={linkStyle}
+          activeClassName={activeLinkStyle}
+        >
           Get Help
         </Link>
       </li>
-      <li className="mr-4">
+      <li>
         <Link
           to="/login"
-          className="rounded-full py-4 px-6 focus:outline-none focus:shadow-outline bg-secondary-100 hover:bg-secondary-500 hover:text-white text-secondary-900"
+          className={linkStyle}
+          activeClassName={activeLinkStyle}
         >
           <FontAwesomeIcon icon={faUser} size="lg" className="mr-3" />
           Login/SignUp
         </Link>
       </li>
-      <li className="rounded-full focus:outline-none focus:shadow-outline bg-primary-100 hover:bg-primary-500 hover:text-white text-primary-900 py-3 px-4">
-        <FontAwesomeIcon
-          icon={faSearch}
-          className="focus:outline-none focus:shadow-outline"
-        />
+      <li className="relative ml-1">
+        <div className="absolute inset-y-0 left-0 flex items-center pl-3">
+          <FontAwesomeIcon icon={faSearch} className="text-gray-700" />
+        </div>
+        <input
+          type="search"
+          name="search"
+          placeholder="Search..."
+          aria-label="Search through site content"
+          className="py-3 pl-10 pr-3 rounded-full placeholder-gray-600 focus:outline-none"
+        ></input>
       </li>
     </ul>
   </div>

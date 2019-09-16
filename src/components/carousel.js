@@ -31,10 +31,10 @@ const Carousel = () => {
     }
   `)
   return (
-    <div style={{ maxWidth: 1200, maxHeight: 600 }} className=" md:m-auto">
+    <div>
       <Slider {...settings}>
         {data.allFile.nodes.map((img, i) => (
-          <Img key={i} fluid={img.images.fluid} className=" rounded-lg"></Img>
+          <Img key={i} fluid={img.images.fluid}></Img>
         ))}
       </Slider>
     </div>

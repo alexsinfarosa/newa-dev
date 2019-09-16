@@ -5,28 +5,25 @@ import NewaLogo from "../assets/newa_logo_lg.svg"
 import Image from "./image"
 
 const linkStyle =
-  "rounded-full py-4 px-6 bg-white text-gray-700 focus:outline-none focus:shadow-outline hover:text-black"
-const activeStyle = "bg-primary-100 text-primary-900"
+  "text-gray-700 text-lg py-4 px-4 bg-white font-semibold hover:no-underline hover:text-primary-500"
+const activeStyle = "text-primary-700 font-semibold cursor-default"
 
 const Navigation = () => {
   return (
-    <nav className="flex items-center py-6 px-10 text-right">
-      <header className="mr-auto w-1/3 max-w-sm">
+    <nav className="flex items-center p-6 text-right">
+      <header className="mr-auto">
         <h1 className="text-left">
-          <Link
-            to="/"
-            className="rounded-full py-1 px-3 inline-block focus:outline-none focus:shadow-outline"
-          >
+          <Link to="/" className="inline-block">
             <NewaLogo className="w-64 h-16"></NewaLogo>
           </Link>
         </h1>
         <div className="inline-flex items-center">
-          <span className="text-gray-600">in partnership with</span>
+          <span className="text-gray-700">in partnership with</span>
           <a
             href="https://www.psu.edu/"
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-full py-1 px-3 focus:outline-none focus:shadow-outline"
+            className="ml-3"
           >
             <Image></Image>
           </a>
@@ -66,7 +63,7 @@ const Navigation = () => {
             Weather Stations
           </Link>
         </li>
-        <li>
+        <li className="mr-0">
           <Link
             to="/about-us"
             className={linkStyle}

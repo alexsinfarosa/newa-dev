@@ -18,6 +18,7 @@
    *
    * @import "tailwindcss/components";
    */
+
 @tailwind components;
 
 /**
@@ -44,6 +45,7 @@
    *
    * @import "tailwindcss/utilities";
    */
+
 @tailwind utilities;
 
 /**
