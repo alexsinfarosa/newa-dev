@@ -8,6 +8,7 @@ import SEO from "../components/seo"
 
 import Carousel from "../components/carousel"
 import WeatherStationOverview from "../components/weatherStationOverview"
+import Card from "../components/reusable/card"
 
 const IndexPage = () => (
   <Layout>
@@ -19,8 +20,12 @@ const IndexPage = () => (
       North East
     </div>
 
-    <Carousel></Carousel>
+    {/* carousel section */}
+    <section className="m-4">
+      <Carousel></Carousel>
+    </section>
 
+    {/* search section */}
     <section className="mt-16 text-center max-w-xl m-auto">
       <h3 className="text-5xl font-semibold text-gray-800">
         Find a Weather Station
@@ -42,36 +47,92 @@ const IndexPage = () => (
       </li>
     </section>
 
-    <section className="flex p-4 mt-24">
-      <div className="flex-1 pr-4">
-        <WeatherStationOverview></WeatherStationOverview>
-      </div>
+    {/* station details and map section */}
+    <section className="px-6 mt-16">
+      <div className="flex -mx-6">
+        {/* left block */}
+        <div className="w-1/2 px-4">
+          <WeatherStationOverview></WeatherStationOverview>
 
-      <div className="flex-1 pl-4">
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus
-          ipsum possimus exercitationem maxime? Beatae sed aperiam corporis qui
-          voluptatibus expedita ullam? Corrupti eligendi autem nemo totam est
-          velit, veritatis molestias.
-        </p>
+          <div className="mt-10">
+            <Card title="Pest & Disease Forecasts" btnLabel="All Reports">
+              <div className="p-4">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus
+                hic, eos eum esse possimus illum quisquam. Quia quaerat
+                architecto reiciendis, explicabo minima modi. Qui vitae
+                consequuntur vero omnis nobis quaerat.
+              </div>
+            </Card>
+          </div>
 
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus
-          ipsum possimus exercitationem maxime? Beatae sed aperiam corporis qui
-          voluptatibus expedita ullam? Corrupti eligendi autem nemo totam est
-          velit, veritatis molestias.
-        </p>
+          <div className="mt-10">
+            <Card title="Crop Management Tool" btnLabel="All Tools">
+              <div className="p-4">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus
+                hic, eos eum esse possimus illum quisquam. Quia quaerat
+                architecto reiciendis, explicabo minima modi. Qui vitae
+                consequuntur vero omnis nobis quaerat.
+              </div>
+            </Card>
+          </div>
+        </div>
 
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus
-          ipsum possimus exercitationem maxime? Beatae sed aperiam corporis qui
-          voluptatibus expedita ullam? Corrupti eligendi autem nemo totam est
-          velit, veritatis molestias.
-        </p>
+        {/* right block */}
+        <div className="w-1/2 px-4">
+          <div className="flex flex-col h-full rounded-lg shadow-lg overflow-hidden">
+            <div className="p-5 bg-purple-100">
+              <h3 className="text-purple-700 text-lg">
+                Click a map marker to load the station details.
+              </h3>
+            </div>
+            <div className="flex-1 flex justify-center items-center">
+              Map...
+            </div>
+            <div className="p-5 bg-purple-100">footer</div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section className="mt-80">BLOG POSTS</section>
+    {/* blocg section */}
+    <section className="mt-16 bg-blue-100" style={{ height: 800 }}>
+      <h3 className="text-5xl font-semibold text-gray-800 text-center">
+        Recent News
+      </h3>
+
+      <div className="mt-12 flex flex-wrap">
+        {[
+          "June 19, 2018",
+          "September 23, 2018",
+          "Jannuary 14, 2018",
+          "April 8, 2017",
+        ].map(d => {
+          return (
+            <div className="px-2">
+              <div className="w-1/2 -mx-2">
+                <Card title={d} btnLabel="Read Article">
+                  <div className="p-4">
+                    <h3 className="text-2xl font-semibold">
+                      Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                    </h3>
+                    <p className="mt-4 text-gray-700">
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Sit est quae atque quas quod temporibus voluptate libero
+                      earum. Velit, sunt autem! Voluptas perferendis in ducimus!
+                      Ipsum in accusamus delectus ipsa.
+                    </p>
+                  </div>
+                </Card>
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    </section>
+
+    <section className="mt-16">X</section>
+
+    <section className="mt-80">X</section>
   </Layout>
 )
 
