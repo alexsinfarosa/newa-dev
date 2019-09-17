@@ -13,7 +13,10 @@ export default function HTML(props) {
         />
         {props.headComponents}
       </head>
-      <body {...props.bodyAttributes} className="text-gray-900 leading-normal">
+      <body
+        {...props.bodyAttributes}
+        className="font-sans text-gray-900 leading-normal"
+      >
         {props.preBodyComponents}
         <noscript key="noscript" id="gatsby-noscript">
           This app works best with JavaScript enabled.

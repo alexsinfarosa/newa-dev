@@ -5,8 +5,9 @@ import NewaLogo from "../assets/newa_logo_lg.svg"
 import Image from "./image"
 
 const linkStyle =
-  "text-gray-700 text-lg py-4 px-4 bg-white font-semibold hover:no-underline hover:text-primary-500"
-const activeStyle = "text-primary-700 font-semibold cursor-default"
+  "text-gray-600 text-lg py-2 px-0 bg-white font-bold hover:no-underline hover:text-primary-500 tracking-wide"
+const activeStyle =
+  "text-primary-500 font-bold cursor-default border-b-2 border-primary-500"
 
 const Navigation = () => {
   return (
@@ -23,7 +24,7 @@ const Navigation = () => {
             href="https://www.psu.edu/"
             target="_blank"
             rel="noopener noreferrer"
-            className="ml-3"
+            className="ml-3 flex items-center"
           >
             <Image></Image>
           </a>
@@ -31,12 +32,12 @@ const Navigation = () => {
       </header>
 
       <ul className="flex">
-        <li className="mr-2">
+        <li className="mr-6">
           <Link to="/" className={linkStyle} activeClassName={activeStyle}>
             Home
           </Link>
         </li>
-        <li className="mr-2">
+        <li className="mr-6">
           <Link
             to="/weather-data"
             className={linkStyle}
@@ -45,7 +46,7 @@ const Navigation = () => {
             Weather Data
           </Link>
         </li>
-        <li className="mr-2">
+        <li className="mr-6">
           <Link
             to="/crop-and-pest-management"
             className={linkStyle}
@@ -54,7 +55,7 @@ const Navigation = () => {
             Crop & Pest Management
           </Link>
         </li>
-        <li className="mr-2">
+        <li className="mr-6">
           <Link
             to="/weather-stations"
             className={linkStyle}

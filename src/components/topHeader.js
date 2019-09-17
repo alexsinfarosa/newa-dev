@@ -5,8 +5,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCircle, faUser, faSearch } from "@fortawesome/pro-solid-svg-icons"
 
 const linkStyle =
-  "text-gray-700 py-4 px-5 font-medium hover:no-underline hover:text-secondary-800"
-const activeLinkStyle = "text-secondary-800 font-medium cursor-default"
+  "text-gray-700 py-4 px-4 font-medium hover:no-underline hover:text-secondary-500"
+const activeLinkStyle = "text-secondary-500 font-medium cursor-default"
 
 const TopHeader = () => (
   <div className="flex items-center py-3 px-6 bg-gray-100">
@@ -61,7 +61,7 @@ const TopHeader = () => (
           name="search"
           placeholder="Search..."
           aria-label="Search through site content"
-          className="py-3 pl-10 pr-3 rounded-full placeholder-gray-600 focus:outline-none"
+          className="py-3 pl-10 pr-3 rounded-full placeholder-gray-600 focus:outline-none border focus:border focus:border-secondary-500"
         ></input>
       </li>
     </ul>

@@ -2,7 +2,10 @@ import React from "react"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faSearch } from "@fortawesome/pro-solid-svg-icons"
-import { faArrowRight } from "@fortawesome/pro-regular-svg-icons"
+import {
+  faArrowRight,
+  faUniversalAccess,
+} from "@fortawesome/pro-regular-svg-icons"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
@@ -49,15 +52,15 @@ const IndexPage = () => (
     </section>
 
     {/* station details and map section */}
-    <section className="px-6 mt-16">
+    <section className="mt-24 px-6">
       <div className="flex -mx-6">
         {/* left block */}
-        <div className="w-1/2 px-4">
+        <div className="w-1/2 px-6">
           <WeatherStationOverview></WeatherStationOverview>
 
           <div className="mt-10">
             <Card title="Pest & Disease Forecasts" btnLabel="All Reports">
-              <div className="p-4">
+              <div className="p-4 bg-white">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus
                 hic, eos eum esse possimus illum quisquam. Quia quaerat
                 architecto reiciendis, explicabo minima modi. Qui vitae
@@ -68,7 +71,7 @@ const IndexPage = () => (
 
           <div className="mt-10">
             <Card title="Crop Management Tool" btnLabel="All Tools">
-              <div className="p-4">
+              <div className="p-4 bg-white">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus
                 hic, eos eum esse possimus illum quisquam. Quia quaerat
                 architecto reiciendis, explicabo minima modi. Qui vitae
@@ -79,29 +82,33 @@ const IndexPage = () => (
         </div>
 
         {/* right block */}
-        <div className="w-1/2 px-4">
+        <div className="w-1/2 px-6">
           <div className="flex flex-col h-full rounded-lg shadow-lg overflow-hidden">
-            <div className="p-5 bg-purple-100">
-              <h3 className="text-purple-700 text-lg">
+            <div className="p-5 bg-primary-100">
+              <h3 className="text-primary-700 text-lg">
                 Click a map marker to load the station details.
               </h3>
             </div>
-            <div className="flex-1 flex justify-center items-center">
+            <div className="flex-1 flex justify-center items-center bg-gray-100">
               Map...
             </div>
-            <div className="p-5 bg-purple-100">footer</div>
+            <div className="flex justify-between p-5 text-xs">
+              <span>NEWA Station</span>
+              <span>Offline Station</span>
+              <span>Airport Station</span>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
     {/* blog section */}
-    <section className="mt-16 px-6">
+    <section className="mt-16 p-6">
       <h3 className="text-5xl font-semibold text-gray-800 text-center">
         Recent News
       </h3>
 
-      <div className="mt-12 flex flex-wrap -mx-4 overflow-hidden">
+      <div className="mt-12 flex flex-wrap -mx-6 overflow-hidden">
         {[
           "June 19, 2018",
           "September 23, 2018",
@@ -109,9 +116,9 @@ const IndexPage = () => (
           "April 8, 2017",
         ].map(d => {
           return (
-            <div className="my-4 px-4 w-1/2">
+            <div className="my-6 px-6 w-1/2">
               <Card title={d} btnLabel="Read Article">
-                <div className="p-4">
+                <div className="p-4 bg-white">
                   <h3 className="text-2xl font-semibold">
                     Lorem ipsum, dolor sit amet consectetur adipisicing elit.
                   </h3>
@@ -138,9 +145,10 @@ const IndexPage = () => (
       </div>
     </section>
 
-    <section className="p-12 mt-16 bg-primary-100">
+    {/* footer section */}
+    <section className="p-12 mt-16">
       <h3 className="text-4xl text-center">Disclaimer</h3>
-      <p className="w-1/2 mt-4 m-auto text-center">
+      <p className=" w-3/5 mt-4 m-auto text-center  leading-relaxed">
         Accuracy of the weather data is the responsibility of the owners of the
         weather station instruments. NEWA is not responsible for accuracy of the
         weather data collected by instruments in the network. If you notice
@@ -149,7 +157,57 @@ const IndexPage = () => (
       </p>
     </section>
 
-    <section className="mt-80">X</section>
+    <section className="flex justify-around items-center p-12 mt-16 bg-primary-100 text-primary-700 underline font-semibold">
+      <span>Contact Us</span>
+      <span>Partners</span>
+      <span>Become a Partner</span>
+      <span>About Us</span>
+      <span>Press Room</span>
+    </section>
+
+    <section className="p-12 mt-2">
+      <h3 className="text-3xl text-center">Brought to You By:</h3>
+      <div className="flex justify-around items-center mt-12">
+        <span>One</span>
+        <span>Two</span>
+        <span>Three</span>
+        <span>Four</span>
+        <span>Five</span>
+      </div>
+    </section>
+
+    <section className="p-12 mt-16 bg-gray-100 text-sm">
+      <div className="flex justify-center items-center">
+        <span className="mr-4">
+          <FontAwesomeIcon
+            size="3x"
+            icon={faUniversalAccess}
+            className="text-gray-900"
+          />
+        </span>
+        <span>
+          If you have disability and are having trouble accessing information on
+          this website or need materils in an alternate format, contact{" "}
+          <a
+            href="mailto:web-accessibility@cornell.edu"
+            className="underline text-secondary-700 font-semibold"
+          >
+            web-accessibility@cornell.edu
+          </a>{" "}
+          for assistance.
+        </span>
+      </div>
+
+      <div className="mt-8 flex items-center">
+        <span className="mr-auto">
+          © 2009-{new Date().getFullYear()} NYS IPM Program, Cornell University
+        </span>
+        <div className="text-secondary-700 font-semibold underline">
+          <span className="mr-8">Contact Us</span>
+          <span>Admin Login</span>
+        </div>
+      </div>
+    </section>
   </Layout>
 )
 

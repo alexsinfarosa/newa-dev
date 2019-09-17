@@ -10,7 +10,7 @@ const WeatherStationOverview = () => {
   return (
     <Card title="Weather Station Overview" btnLabel="All Details">
       {/* Body */}
-      <div className="p-4">
+      <div className="p-4 bg-white">
         <div className="flex -mx-4">
           <div className="w-1/2 p-4 inline-flex flex-col justify-center items-center">
             <span className="py-1 px-3 bg-green-700 text-white text-xs font-semibold rounded-full uppercase tracking-wider">
@@ -34,7 +34,7 @@ const WeatherStationOverview = () => {
             <hr className="mt-4 mb-2 border w-48" />
 
             <div className="flex justify-between">
-              <div className="text-blue-700 font-bold">Low: 52˚</div>
+              <div className="text-secondary-700 font-bold">Low: 52˚</div>
               <div className="text-red-700 font-bold">High: 82˚</div>
             </div>
           </div>
@@ -56,7 +56,7 @@ const WeatherStationOverview = () => {
       </div>
 
       {/* Footer */}
-      <div className="flex">
+      <div className="flex bg-white">
         {["Tomorrow", "Sept 20", "Sept 21", "Sept 22"].map((d, i) => (
           <>
             <div
@@ -73,7 +73,7 @@ const WeatherStationOverview = () => {
                   size="lg"
                   className="text-gray-700"
                 />
-                <span className="ml-2 text-sm text-blue-700 font-bold">
+                <span className="ml-2 text-sm text-secondary-700 font-bold">
                   52˚
                 </span>
                 <span className="ml-1 text-sm text-red-700 font-bold">82˚</span>

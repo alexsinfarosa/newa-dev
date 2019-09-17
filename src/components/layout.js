@@ -17,10 +17,10 @@ const Layout = ({ children }) => {
   `)
 
   return (
-    <div className="antialiased text-gray-900">
+    <div>
       <TopHeader siteTitle={data.site.siteMetadata.title} />
       <Navigation></Navigation>
-      <main>{children}</main>
+      <main className="max-w-6xl m-auto">{children}</main>
     </div>
   )
 }
