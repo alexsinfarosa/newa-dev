@@ -19,8 +19,13 @@ const Layout = ({ children }) => {
   return (
     <div>
       <TopHeader siteTitle={data.site.siteMetadata.title} />
-      <Navigation></Navigation>
-      <main className="max-w-6xl m-auto">{children}</main>
+
+      <div className="m-auto" style={{ maxWidth: 1600 }}>
+        <Navigation></Navigation>
+      </div>
+      <main className="m-auto" style={{ maxWidth: 1440 }}>
+        {children}
+      </main>
     </div>
   )
 }

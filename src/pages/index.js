@@ -1,10 +1,12 @@
 import React from "react"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faSearch } from "@fortawesome/pro-solid-svg-icons"
 import {
+  faSearch,
   faArrowRight,
   faUniversalAccess,
+  faEngineWarning,
+  faUniversity,
 } from "@fortawesome/pro-regular-svg-icons"
 
 import Layout from "../components/layout"
@@ -18,15 +20,17 @@ const IndexPage = () => (
   <Layout>
     <SEO title="Home" />
 
-    <div className="text-center text-gray-700 tracking-wide text-2xl font-light py-12">
-      Your source for <span className="font-semibold">weather</span> and{" "}
-      <span className="font-semibold">integrated pest management</span> in the
-      North East
-    </div>
-
     {/* carousel section */}
-    <section className="mt-4">
-      <Carousel></Carousel>
+    <section className="mt-0">
+      <div className="text-gray-800 text-center tracking-wider text-2xl font-thin py-8 max-w-md m-auto">
+        Your source for <span className="font-normal">weather</span> and{" "}
+        <span className="font-normal">integrated pest management</span> in the
+        North East
+      </div>
+
+      <div className="mt-8">
+        <Carousel></Carousel>
+      </div>
     </section>
 
     {/* search section */}
@@ -61,10 +65,30 @@ const IndexPage = () => (
           <div className="mt-10">
             <Card title="Pest & Disease Forecasts" btnLabel="All Reports">
               <div className="p-4 bg-white">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus
-                hic, eos eum esse possimus illum quisquam. Quia quaerat
-                architecto reiciendis, explicabo minima modi. Qui vitae
-                consequuntur vero omnis nobis quaerat.
+                <div className="flex flex-wrap -mx-6 overflow-hidden">
+                  {[
+                    "Apple Scab",
+                    "Fire Blight",
+                    "Codding Moth",
+                    "Plum Curculio",
+                    "Grape Berry Moth",
+                    "Cabbage Maggot",
+                  ].map((d, i) => (
+                    <div
+                      key={i}
+                      className="my-1 px-6 w-1/3 px-2 overflow-hidden text-xs text-center font-semibold underline text-secondary-500 border-r"
+                    >
+                      {i === 0 ? (
+                        <span className="text-red-700 underline">
+                          <FontAwesomeIcon icon={faEngineWarning} />
+                          <span className="ml-1">{d}</span>
+                        </span>
+                      ) : (
+                        <span>{d}</span>
+                      )}
+                    </div>
+                  ))}
+                </div>
               </div>
             </Card>
           </div>
@@ -72,10 +96,23 @@ const IndexPage = () => (
           <div className="mt-10">
             <Card title="Crop Management Tool" btnLabel="All Tools">
               <div className="p-4 bg-white">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus
-                hic, eos eum esse possimus illum quisquam. Quia quaerat
-                architecto reiciendis, explicabo minima modi. Qui vitae
-                consequuntur vero omnis nobis quaerat.
+                <div className="flex flex-wrap -mx-6 overflow-hidden">
+                  {[
+                    "Apple Freeze Risk",
+                    "Blueberry Phenology",
+                    "Drought Monitoring",
+                    "Drought Monitor Map",
+                    "Monthly Drought Outlook",
+                    "Activity Planner",
+                  ].map((d, i) => (
+                    <div
+                      key={i}
+                      className="my-1 px-6 w-1/3 px-2 overflow-hidden text-xs text-center font-semibold underline text-secondary-500 border-r"
+                    >
+                      <span>{d}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </Card>
           </div>
@@ -103,7 +140,7 @@ const IndexPage = () => (
     </section>
 
     {/* blog section */}
-    <section className="mt-16 p-6">
+    <section className="mt-16 p-6 bg-gray-100">
       <h3 className="text-5xl font-semibold text-gray-800 text-center">
         Recent News
       </h3>
@@ -165,18 +202,23 @@ const IndexPage = () => (
       <span>Press Room</span>
     </section>
 
-    <section className="p-12 mt-2">
-      <h3 className="text-3xl text-center">Brought to You By:</h3>
-      <div className="flex justify-around items-center mt-12">
-        <span>One</span>
-        <span>Two</span>
-        <span>Three</span>
-        <span>Four</span>
-        <span>Five</span>
+    <section className="p-12 mt-6">
+      <div className="flex flex-wrap -mx-4 overflow-hidden">
+        <div className="my-4 px-4 w-1/3 overflow-hidden">
+          <h3 className="text-3xl font-semibold">Brought to You By:</h3>
+        </div>
+
+        <div className="my-4 px-4 w-2/3 overflow-hidden">
+          <div className="flex justify-between">
+            {[1, 2, 3, 4, 5].map(d => (
+              <FontAwesomeIcon size="3x" icon={faUniversity} />
+            ))}
+          </div>
+        </div>
       </div>
     </section>
 
-    <section className="p-12 mt-16 bg-gray-100 text-sm">
+    <section className="p-12 mt-6 bg-gray-100 text-sm">
       <div className="flex justify-center items-center">
         <span className="mr-4">
           <FontAwesomeIcon

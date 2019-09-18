@@ -13,7 +13,7 @@ const WeatherStationOverview = () => {
       <div className="p-4 bg-white">
         <div className="flex -mx-4">
           <div className="w-1/2 p-4 inline-flex flex-col justify-center items-center">
-            <span className="py-1 px-3 bg-green-700 text-white text-xs font-semibold rounded-full uppercase tracking-wider">
+            <span className="py-1 px-3 bg-green-500 text-white text-xs font-semibold rounded-full uppercase tracking-wider">
               active
             </span>
 
