@@ -13,7 +13,7 @@ const Navigation = () => {
     <nav className="flex items-center p-10 text-right">
       <header className="mr-auto" style={{ minWidth: 350, maxWidth: 400 }}>
         <h1 className="text-left">
-          <Link to="/" className="inline-block">
+          <Link to="/" className="inline-block" aria-label="NEWA">
             <NewaLogo className="w-64 h-16"></NewaLogo>
           </Link>
         </h1>

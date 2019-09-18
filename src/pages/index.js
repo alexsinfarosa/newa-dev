@@ -41,7 +41,7 @@ const IndexPage = () => (
       <p className="text-gray-700 text-xl">
         for up-to-date pest forecasts and weather data
       </p>
-      <li className="inline-flex list-none relative mt-8">
+      <div className="inline-flex list-none relative mt-8">
         <div className="absolute inset-y-0 left-0 flex items-center pl-3">
           <FontAwesomeIcon icon={faSearch} className="text-gray-600" />
         </div>
@@ -52,7 +52,7 @@ const IndexPage = () => (
           aria-label="Search weather station"
           className="py-3 pl-10 pr-3 w-80 rounded-full bg-gray-100 focus:outline-none border border-gray-300 placeholder-gray-600 focus:bg-white focus:bg-transparent"
         ></input>
-      </li>
+      </div>
     </section>
 
     {/* station details and map section */}
@@ -172,7 +172,7 @@ const IndexPage = () => (
         })}
 
         <div className="mt-16 m-auto">
-          <button className="flex items-center py-2 px-4 text-2xl bg-white text-primary-600 rounded-full border border-primary-200">
+          <button className="flex items-center py-2 px-4 text-2xl tracking-wider bg-white text-primary-700 rounded-full border border-primary-300">
             See All News{" "}
             <span className="ml-3">
               <FontAwesomeIcon icon={faArrowRight} />
