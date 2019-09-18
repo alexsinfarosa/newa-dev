@@ -51,29 +51,17 @@ module.exports = {
         purgeOnly: ["src/css/style.css"],
       },
     },
-    // {
-    //   resolve: `gatsby-source-wordpress`,
-    //   options: {
-    //     // your wordpress source
-    //     baseUrl: `https://live-cu-newa.pantheonsite.io`,
-    //     protocol: `https`,
-    //     // is it hosted on wordpress.com, or self-hosted?
-    //     hostingWPCOM: false,
-    //     // does your site use the Advanced Custom Fields Plugin?
-    //     useACF: true,
-    //   },
-    // },
-    // {
-    //   resolve: "gatsby-source-graphql",
-    //   options: {
-    //     // This type will contain remote schema Query type
-    //     typeName: "",
-    //     // This is field under which it's accessible
-    //     fieldName: "",
-    //     // Url to query from
-    //     url: "https://live-cu-newa.pantheonsite.io/graphql",
-    //   },
-    // },
+    {
+      resolve: "gatsby-source-graphql",
+      options: {
+        // This type will contain remote schema Query type
+        typeName: "WPGraphQL",
+        // This is field under which it's accessible
+        fieldName: "WPGraphQL",
+        // Url to query from
+        url: "https://live-cu-newa.pantheonsite.io/graphql",
+      },
+    },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
