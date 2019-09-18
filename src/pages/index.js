@@ -194,16 +194,16 @@ const IndexPage = () => (
       </p>
     </section>
 
-    <section className="flex justify-around items-center p-12 mt-16 bg-primary-100 text-primary-700 underline font-semibold">
-      <span>Contact Us</span>
-      <span>Partners</span>
-      <span>Become a Partner</span>
-      <span>About Us</span>
-      <span>Press Room</span>
+    <section className="flex justify-around items-center p-12 mt-16 bg-primary-100 text-primary-700 font-semibold">
+      <span className="border-b border-primary-700">Contact Us</span>
+      <span className="border-b border-primary-700">Partners</span>
+      <span className="border-b border-primary-700">Become a Partner</span>
+      <span className="border-b border-primary-700">About Us</span>
+      <span className="border-b border-primary-700">Press Room</span>
     </section>
 
     <section className="p-12 mt-6">
-      <div className="flex flex-wrap -mx-4 overflow-hidden">
+      <div className="flex flex-wrap -mx-4 overflow-hidden text-gray-700">
         <div className="my-4 px-4 w-1/3 overflow-hidden">
           <h3 className="text-3xl font-semibold">Brought to You By:</h3>
         </div>
