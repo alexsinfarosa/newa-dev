@@ -160,10 +160,10 @@ const IndexPage = () => (
                     Lorem ipsum, dolor sit amet consectetur adipisicing elit.
                   </h3>
                   <p className="mt-4 text-gray-700">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit
-                    est quae atque quas quod temporibus voluptate libero earum.
-                    Velit, sunt autem! Voluptas perferendis in ducimus! Ipsum in
-                    accusamus delectus ipsa.
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                    Sit est quae atque quas quod temporibus voluptate libero
+                    earum. Velit, sunt autem! Voluptas perferendis in ducimus!
+                    Ipsum in accusamus delectus ipsa.
                   </p>
                 </div>
               </Card>
