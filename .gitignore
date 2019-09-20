@@ -54,7 +54,8 @@ typings/
 
 # dotenv environment variables file
 .env
-*.env
+.env.development
+.env.production
 
 # gatsby files
 .cache/
@@ -69,3 +70,4 @@ yarn-error.log
 .pnp.js
 # Yarn Integrity file
 .yarn-integrity
+
