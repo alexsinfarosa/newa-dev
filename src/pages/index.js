@@ -15,6 +15,7 @@ import SEO from "../components/seo"
 import Carousel from "../components/carousel"
 import WeatherStationOverview from "../components/weatherStationOverview"
 import Card from "../components/reusable/card"
+import StationMap from "../components/stationMap"
 
 const IndexPage = () => (
   <Layout>
@@ -22,7 +23,7 @@ const IndexPage = () => (
 
     {/* carousel section */}
     <section>
-      <div className="text-primary-700 text-center tracking-wider text-xl font-light py-4 bg-primary-100">
+      <div className="text-center tracking-wider text-2xl py-4 font-light">
         Your source for <span className="font-normal">weather</span> and{" "}
         <span className="font-normal">integrated pest management</span> in the
         North East
@@ -63,7 +64,11 @@ const IndexPage = () => (
           <WeatherStationOverview></WeatherStationOverview>
 
           <div className="mt-10">
-            <Card title="Pest & Disease Forecasts" btnLabel="All Reports">
+            <Card
+              title="Pest & Disease Forecasts"
+              btnLabel="All Reports"
+              color="primary"
+            >
               <div className="p-4 bg-white">
                 <div className="flex flex-wrap -mx-6 overflow-hidden">
                   {[
@@ -76,7 +81,7 @@ const IndexPage = () => (
                   ].map((d, i) => (
                     <div
                       key={i}
-                      className="my-1 px-6 w-1/3 px-2 overflow-hidden text-xs text-center font-semibold underline text-secondary-500 border-r"
+                      className="my-1 px-6 w-1/3 px-2 overflow-hidden text-xs text-center font-semibold underline text-primary-700 border-r"
                     >
                       {i === 0 ? (
                         <span className="text-red-700 underline">
@@ -94,7 +99,11 @@ const IndexPage = () => (
           </div>
 
           <div className="mt-10">
-            <Card title="Crop Management Tool" btnLabel="All Tools">
+            <Card
+              title="Crop Management Tool"
+              btnLabel="All Tools"
+              color="primary"
+            >
               <div className="p-4 bg-white">
                 <div className="flex flex-wrap -mx-6 overflow-hidden">
                   {[
@@ -107,7 +116,7 @@ const IndexPage = () => (
                   ].map((d, i) => (
                     <div
                       key={i}
-                      className="my-1 px-6 w-1/3 px-2 overflow-hidden text-xs text-center font-semibold underline text-secondary-500 border-r"
+                      className="my-1 px-6 w-1/3 px-2 overflow-hidden text-xs text-center font-semibold underline text-primary-700 border-r"
                     >
                       <span>{d}</span>
                     </div>
@@ -121,15 +130,15 @@ const IndexPage = () => (
         {/* right block */}
         <div className="w-1/2 px-6">
           <div className="flex flex-col h-full rounded-lg shadow-lg overflow-hidden">
-            <div className="p-5 bg-primary-100">
-              <h3 className="text-primary-700 text-lg">
+            <div className="p-5 bg-primary-300">
+              <h3 className="text-primary-900 text-lg">
                 Click a map marker to load the station details
               </h3>
             </div>
-            <div className="flex-1 flex justify-center items-center bg-gray-100">
-              Map...
+            <div className="flex-1 flex justify-center items-center bg-primary-100 text-primary-700">
+              <StationMap></StationMap>
             </div>
-            <div className="flex justify-between p-5 text-xs">
+            <div className="flex justify-between p-5 text-xs text-primary-700 font-semibold">
               <span>NEWA Station</span>
               <span>Offline Station</span>
               <span>Airport Station</span>
@@ -140,8 +149,8 @@ const IndexPage = () => (
     </section>
 
     {/* blog section */}
-    <section className="mt-16 p-6 bg-gray-100">
-      <h3 className="text-5xl font-semibold text-gray-800 text-center">
+    <section className="mt-24 p-6 bg-secondary-100">
+      <h3 className="text-5xl font-semibold text-secondary-900 text-center">
         Recent News
       </h3>
 
@@ -151,15 +160,15 @@ const IndexPage = () => (
           "September 23, 2018",
           "Jannuary 14, 2018",
           "April 8, 2017",
-        ].map(d => {
+        ].map((d, i) => {
           return (
-            <div className="my-6 px-6 w-1/2">
-              <Card title={d} btnLabel="Read Article">
+            <div key={i} className="my-6 px-6 w-1/2">
+              <Card title={d} btnLabel="Read Article" color="secondary">
                 <div className="p-4 bg-white">
-                  <h3 className="text-2xl font-semibold">
+                  <h3 className="text-secondary-900 text-2xl font-semibold">
                     Lorem ipsum, dolor sit amet consectetur adipisicing elit.
                   </h3>
-                  <p className="mt-4 text-gray-700">
+                  <p className="mt-4 text-secondary-700">
                     Lorem ipsum, dolor sit amet consectetur adipisicing elit.
                     Sit est quae atque quas quod temporibus voluptate libero
                     earum. Velit, sunt autem! Voluptas perferendis in ducimus!
@@ -172,7 +181,7 @@ const IndexPage = () => (
         })}
 
         <div className="mt-16 m-auto">
-          <button className="flex items-center py-2 px-4 text-2xl tracking-wider bg-white text-primary-700 rounded-full border border-primary-300">
+          <button className="flex items-center py-2 px-4 text-2xl tracking-wider bg-white text-secondary-900 rounded-full border border-secondary-300 hover:text-secondary-700">
             See All News{" "}
             <span className="ml-3">
               <FontAwesomeIcon icon={faArrowRight} />
@@ -194,12 +203,12 @@ const IndexPage = () => (
       </p>
     </section>
 
-    <section className="flex justify-around items-center p-12 mt-16 bg-primary-100 text-primary-700 font-semibold">
-      <span className="border-b border-primary-700">Contact Us</span>
-      <span className="border-b border-primary-700">Partners</span>
-      <span className="border-b border-primary-700">Become a Partner</span>
-      <span className="border-b border-primary-700">About Us</span>
-      <span className="border-b border-primary-700">Press Room</span>
+    <section className="flex justify-around items-center p-12 mt-16 bg-primary-300 text-primary-900 font-semibold tracking-widest">
+      <span className="border-b border-primary-900">Contact Us</span>
+      <span className="border-b border-primary-900">Partners</span>
+      <span className="border-b border-primary-900">Become a Partner</span>
+      <span className="border-b border-primary-900">About Us</span>
+      <span className="border-b border-primary-900">Press Room</span>
     </section>
 
     <section className="p-12 mt-6">
@@ -210,8 +219,8 @@ const IndexPage = () => (
 
         <div className="my-4 px-4 w-2/3 overflow-hidden">
           <div className="flex justify-between">
-            {[1, 2, 3, 4, 5].map(d => (
-              <FontAwesomeIcon size="3x" icon={faUniversity} />
+            {[1, 2, 3, 4, 5].map((d, i) => (
+              <FontAwesomeIcon key={i} size="3x" icon={faUniversity} />
             ))}
           </div>
         </div>
@@ -232,7 +241,7 @@ const IndexPage = () => (
           this website or need materils in an alternate format, contact{" "}
           <a
             href="mailto:web-accessibility@cornell.edu"
-            className="underline text-secondary-700 font-semibold"
+            className="underline text-secondary-500 font-semibold"
           >
             web-accessibility@cornell.edu
           </a>{" "}
@@ -244,7 +253,7 @@ const IndexPage = () => (
         <span className="mr-auto">
           © 2009-{new Date().getFullYear()} NYS IPM Program, Cornell University
         </span>
-        <div className="text-secondary-700 font-semibold underline">
+        <div className="font-semibold underline text-secondary-500">
           <span className="mr-8">Contact Us</span>
           <span>Admin Login</span>
         </div>
