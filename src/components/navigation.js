@@ -2,31 +2,45 @@ import { Link } from "gatsby"
 import React from "react"
 
 import NewaLogo from "../assets/newa_logo_lg.svg"
-import Image from "./image"
+import IpmLogo from "./imageComponents/ipmLogo"
+import UniversityLogo from "./imageComponents/universityLogo"
 
 const linkStyle =
-  "text-black text-lg py-1 px-0 bg-white hover:no-underline tracking-wide"
-const activeStyle = "cursor-default border-b border-black"
+  "text-black text-lg py-1 px-0 bg-white hover:no-underline tracking-wide hover:opacity-75"
+const activeStyle = "cursor-default border-b border-black hover:opacity-75"
 
 const Navigation = () => {
   return (
-    <nav className="flex items-center p-10 text-right">
-      <header className="mr-auto" style={{ minWidth: 350, maxWidth: 400 }}>
+    <nav className="flex items-center p-10">
+      <header className="mr-auto" style={{ minWidth: 300, maxWidth: 350 }}>
         <h1 className="text-left">
           <Link to="/" className="inline-block" aria-label="NEWA">
             <NewaLogo className="w-64 h-16"></NewaLogo>
           </Link>
         </h1>
-        <div className="inline-flex items-center">
-          <span className="text-gray-700">in partnership with</span>
-          <a
-            href="https://www.psu.edu/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="ml-3 flex items-center"
-          >
-            <Image></Image>
-          </a>
+        <div className="text-center">
+          <div className="text-gray-700 font-semibold tracking-widest py-1">
+            in partnership with
+          </div>
+          <div className="flex justify-end">
+            <a
+              href="https://www.psu.edu/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center"
+            >
+              <IpmLogo></IpmLogo>
+            </a>
+
+            <a
+              href="https://www.psu.edu/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="ml-3 flex items-center"
+            >
+              <UniversityLogo></UniversityLogo>
+            </a>
+          </div>
         </div>
       </header>
 

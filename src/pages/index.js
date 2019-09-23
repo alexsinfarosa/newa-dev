@@ -21,14 +21,14 @@ const IndexPage = () => (
     <SEO title="Home" />
 
     {/* carousel section */}
-    <section className="mt-0">
-      <div className="text-gray-800 text-center tracking-wider text-2xl font-thin py-8 max-w-md m-auto">
+    <section>
+      <div className="text-primary-700 text-center tracking-wider text-xl font-light py-4 bg-primary-100">
         Your source for <span className="font-normal">weather</span> and{" "}
         <span className="font-normal">integrated pest management</span> in the
         North East
       </div>
 
-      <div className="mt-8">
+      <div>
         <Carousel></Carousel>
       </div>
     </section>
@@ -123,7 +123,7 @@ const IndexPage = () => (
           <div className="flex flex-col h-full rounded-lg shadow-lg overflow-hidden">
             <div className="p-5 bg-primary-100">
               <h3 className="text-primary-700 text-lg">
-                Click a map marker to load the station details.
+                Click a map marker to load the station details
               </h3>
             </div>
             <div className="flex-1 flex justify-center items-center bg-gray-100">

@@ -2,20 +2,18 @@ import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import Img from "gatsby-image"
 
-const Image = () => {
+const UniversityLogo = () => {
   const data = useStaticQuery(graphql`
     query {
       partnerLogo: file(relativePath: { eq: "penn-state-logo.jpg" }) {
         childImageSharp {
-          fixed(width: 150) {
+          fixed(width: 120) {
             ...GatsbyImageSharpFixed
           }
         }
       }
     }
   `)
-
-  console.log(data)
 
   return (
     <Img
@@ -25,4 +23,4 @@ const Image = () => {
   )
 }
 
-export default Image
+export default UniversityLogo

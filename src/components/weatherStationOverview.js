@@ -34,7 +34,7 @@ const WeatherStationOverview = () => {
             <hr className="mt-4 mb-2 border w-48" />
 
             <div className="flex justify-between">
-              <div className="text-secondary-700 font-bold">Low: 52˚</div>
+              <div className="mr-4 text-secondary-700 font-bold">Low: 52˚</div>
               <div className="text-red-700 font-bold">High: 82˚</div>
             </div>
           </div>

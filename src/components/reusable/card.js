@@ -12,7 +12,7 @@ const Card = ({ title, children, btnLabel }) => {
           {title}
         </h3>
 
-        <button className="flex items-center py-2 px-4 bg-white text-primary-700 rounded-full border border-primary-300">
+        <button className="flex items-center py-2 px-4 bg-white text-primary-700 rounded-full border border-primary-200">
           {btnLabel}
           <span className="ml-3">
             <FontAwesomeIcon icon={faArrowRight} />
