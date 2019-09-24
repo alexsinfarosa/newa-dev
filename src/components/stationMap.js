@@ -1,5 +1,5 @@
 import React from "react"
-import ReactMapGL from "react-map-gl"
+import ReactMapGL, { NavigationControl } from "react-map-gl"
 
 export default function StationMap() {
   const [viewport, setViewport] = React.useState({
@@ -17,7 +17,11 @@ export default function StationMap() {
         mapboxApiAccessToken={process.env.GATSBY_MAPBOX_TOKEN}
         // mapStyle="mapbox://styles/xscanna/ck0wmlp3p0g8b1coymhpx0rv4"
         onViewportChange={viewport => setViewport(viewport)}
-      ></ReactMapGL>
+      >
+        <div className="ml-2 mt-2 w-8">
+          <NavigationControl></NavigationControl>
+        </div>
+      </ReactMapGL>
     </div>
   )
 }

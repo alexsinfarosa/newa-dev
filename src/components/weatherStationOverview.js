@@ -62,7 +62,7 @@ const WeatherStationOverview = () => {
       {/* Footer */}
       <div className="flex bg-white">
         {["Tomorrow", "Sept 20", "Sept 21", "Sept 22"].map((d, i) => (
-          <div key={i}>
+          <div key={i} className="flex-1 mx-1">
             <div className="flex-1 justify-center items-center p-2 bg-primary-100 rounded-t-lg">
               <h3 className="text-sm text-center  tracking-wider text-primary-900 font-semibold ">
                 {d}
