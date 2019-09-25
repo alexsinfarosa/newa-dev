@@ -1,40 +1,72 @@
 import React from "react"
-import ReactMapGL, { Marker, Popup, NavigationControl } from "react-map-gl"
+import ReactMapGL, { Marker, NavigationControl } from "react-map-gl"
 import axios from "axios"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faSpinner } from "@fortawesome/pro-solid-svg-icons"
 import { faPlane, faCircle } from "@fortawesome/pro-solid-svg-icons"
 
+const dataFetchReducer = (state, action) => {
+  switch (action.type) {
+    case "FETCH_INIT":
+      return {
+        ...state,
+        isLoading: true,
+        isError: false,
+      }
+    case "FETCH_SUCCESS":
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        data: action.payload,
+      }
+    case "FETCH_FAILURE":
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+      }
+    default:
+      throw new Error()
+  }
+}
+
 export default function StationMap() {
-  const [stations, setStations] = React.useState([])
-  const [isError, setIsError] = React.useState(false)
-  const [isLoading, setIsLoading] = React.useState(false)
+  const [state, dispatch] = React.useReducer(dataFetchReducer, {
+    isLoading: false,
+    isError: false,
+    data: [],
+  })
 
   React.useEffect(() => {
+    let didCancel = false
     const fetchAllStations = async () => {
-      setIsError(false)
-      setIsLoading(true)
-
+      dispatch({ type: "FETCH_INIT" })
       try {
         const result = await axios.get(
           `${window.location.protocol}//newa2.nrcc.cornell.edu/newaUtil/stateStationList/all`
         )
-        setStations(result.data.stations)
+        if (!didCancel) {
+          dispatch({ type: "FETCH_SUCCESS", payload: result.data.stations })
+        }
       } catch (error) {
-        setIsError(true)
+        if (!didCancel) {
+          dispatch({ type: "FETCH_FAILURE" })
+        }
       }
-
-      setIsLoading(false)
     }
-
     fetchAllStations()
+
+    return () => {
+      didCancel = true
+    }
   }, [])
 
   const [viewport, setViewport] = React.useState({
     latitude: 42.444,
     longitude: -76.5019,
-    zoom: 11,
+    zoom: 8,
     width: "100%",
     height: "100%",
   })
@@ -54,7 +86,7 @@ export default function StationMap() {
   }
 
   return (
-    <div className="flex flex-col h-full rounded-lg shadow-lg overflow-hidden">
+    <div className="flex flex-col h-full w-full rounded-lg shadow-lg overflow-hidden">
       <div className="p-5 bg-primary-300">
         <h3 className="text-primary-900 text-lg">
           Click a map marker to load the station details
@@ -62,13 +94,13 @@ export default function StationMap() {
       </div>
 
       <div className="flex-1 flex justify-center items-center">
-        {isError && (
+        {state.isError && (
           <div className="text-center">
             Unable to place stations on the map...
           </div>
         )}
 
-        {isLoading ? (
+        {state.isLoading ? (
           <div className="w-full h-full flex justify-center items-center">
             <FontAwesomeIcon icon={faSpinner} size="2x" spin></FontAwesomeIcon>
           </div>
@@ -84,7 +116,7 @@ export default function StationMap() {
               <NavigationControl></NavigationControl>
             </div>
 
-            {stations.map(stn => {
+            {state.data.map(stn => {
               return (
                 <Marker
                   key={`${stn.network}-${stn.id}`}

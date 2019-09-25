@@ -178,73 +178,76 @@ const IndexPage = () => (
     </section>
 
     {/* footer section */}
-    <section className="p-12 mt-16">
-      <h3 className="text-4xl text-center">Disclaimer</h3>
-      <p className=" w-3/5 mt-4 m-auto text-center  leading-relaxed">
-        Accuracy of the weather data is the responsibility of the owners of the
-        weather station instruments. NEWA is not responsible for accuracy of the
-        weather data collected by instruments in the network. If you notice
-        erroneous or missing weather data, contact NEWA and we will contact the
-        owner of the instrument.
-      </p>
-    </section>
+    <footer>
+      <section className="p-12 mt-16">
+        <h3 className="text-4xl text-center">Disclaimer</h3>
+        <p className=" w-3/5 mt-4 m-auto text-center  leading-relaxed">
+          Accuracy of the weather data is the responsibility of the owners of
+          the weather station instruments. NEWA is not responsible for accuracy
+          of the weather data collected by instruments in the network. If you
+          notice erroneous or missing weather data, contact NEWA and we will
+          contact the owner of the instrument.
+        </p>
+      </section>
 
-    <section className="flex justify-around items-center p-12 mt-16 bg-primary-300 text-primary-900 font-semibold tracking-widest">
-      <span className="border-b border-primary-900">Contact Us</span>
-      <span className="border-b border-primary-900">Partners</span>
-      <span className="border-b border-primary-900">Become a Partner</span>
-      <span className="border-b border-primary-900">About Us</span>
-      <span className="border-b border-primary-900">Press Room</span>
-    </section>
+      <section className="flex justify-around items-center p-12 mt-16 bg-primary-300 text-primary-900 font-semibold tracking-widest">
+        <span className="border-b border-primary-900">Contact Us</span>
+        <span className="border-b border-primary-900">Partners</span>
+        <span className="border-b border-primary-900">Become a Partner</span>
+        <span className="border-b border-primary-900">About Us</span>
+        <span className="border-b border-primary-900">Press Room</span>
+      </section>
 
-    <section className="p-12 mt-6">
-      <div className="flex flex-wrap -mx-4 overflow-hidden text-gray-700">
-        <div className="my-4 px-4 w-1/3 overflow-hidden">
-          <h3 className="text-3xl font-semibold">Brought to You By:</h3>
-        </div>
+      <section className="p-12 mt-6">
+        <div className="flex flex-wrap -mx-4 overflow-hidden text-gray-700">
+          <div className="my-4 px-4 w-1/3 overflow-hidden">
+            <h3 className="text-3xl font-semibold">Brought to You By:</h3>
+          </div>
 
-        <div className="my-4 px-4 w-2/3 overflow-hidden">
-          <div className="flex justify-between">
-            {[1, 2, 3, 4, 5].map((d, i) => (
-              <FontAwesomeIcon key={i} size="3x" icon={faUniversity} />
-            ))}
+          <div className="my-4 px-4 w-2/3 overflow-hidden">
+            <div className="flex justify-between">
+              {[1, 2, 3, 4, 5].map((d, i) => (
+                <FontAwesomeIcon key={i} size="3x" icon={faUniversity} />
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section className="p-12 mt-6 bg-gray-100 text-sm">
-      <div className="flex justify-center items-center">
-        <span className="mr-4">
-          <FontAwesomeIcon
-            size="3x"
-            icon={faUniversalAccess}
-            className="text-gray-900"
-          />
-        </span>
-        <span>
-          If you have disability and are having trouble accessing information on
-          this website or need materils in an alternate format, contact{" "}
-          <a
-            href="mailto:web-accessibility@cornell.edu"
-            className="underline text-secondary-500 font-semibold"
-          >
-            web-accessibility@cornell.edu
-          </a>{" "}
-          for assistance.
-        </span>
-      </div>
-
-      <div className="mt-8 flex items-center">
-        <span className="mr-auto">
-          © 2009-{new Date().getFullYear()} NYS IPM Program, Cornell University
-        </span>
-        <div className="font-semibold underline text-secondary-500">
-          <span className="mr-8">Contact Us</span>
-          <span>Admin Login</span>
+      <section className="p-12 mt-6 bg-gray-100 text-sm">
+        <div className="flex justify-center items-center">
+          <span className="mr-4">
+            <FontAwesomeIcon
+              size="3x"
+              icon={faUniversalAccess}
+              className="text-gray-900"
+            />
+          </span>
+          <span>
+            If you have disability and are having trouble accessing information
+            on this website or need materils in an alternate format, contact{" "}
+            <a
+              href="mailto:web-accessibility@cornell.edu"
+              className="underline text-secondary-500 font-semibold"
+            >
+              web-accessibility@cornell.edu
+            </a>{" "}
+            for assistance.
+          </span>
         </div>
-      </div>
-    </section>
+
+        <div className="mt-8 flex items-center">
+          <span className="mr-auto">
+            © 2009-{new Date().getFullYear()} NYS IPM Program, Cornell
+            University
+          </span>
+          <div className="font-semibold underline text-secondary-500">
+            <span className="mr-8">Contact Us</span>
+            <span>Admin Login</span>
+          </div>
+        </div>
+      </section>
+    </footer>
   </Layout>
 )
 
