@@ -181,7 +181,7 @@ const IndexPage = () => (
         })}
 
         <div className="mt-16 m-auto">
-          <button className="flex items-center py-2 px-4 text-2xl tracking-wider bg-white text-secondary-900 rounded-full border border-secondary-300 hover:text-secondary-700">
+          <button className="flex items-center py-2 px-4 text-2xl tracking-wider bg-white text-secondary-900 rounded-full border border-secondary-200 hover:text-secondary-700">
             See All News{" "}
             <span className="ml-3">
               <FontAwesomeIcon icon={faArrowRight} />

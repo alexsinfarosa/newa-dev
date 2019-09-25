@@ -15,7 +15,7 @@ export default function StationMap() {
       <ReactMapGL
         {...viewport}
         mapboxApiAccessToken={process.env.GATSBY_MAPBOX_TOKEN}
-        // mapStyle="mapbox://styles/xscanna/ck0wmlp3p0g8b1coymhpx0rv4"
+        mapStyle="mapbox://styles/mapbox/streets-v11"
         onViewportChange={viewport => setViewport(viewport)}
       >
         <div className="ml-2 mt-2 w-8">
