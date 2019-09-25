@@ -129,21 +129,7 @@ const IndexPage = () => (
 
         {/* right block */}
         <div className="w-1/2 px-6">
-          <div className="flex flex-col h-full rounded-lg shadow-lg overflow-hidden">
-            <div className="p-5 bg-primary-300">
-              <h3 className="text-primary-900 text-lg">
-                Click a map marker to load the station details
-              </h3>
-            </div>
-            <div className="flex-1 flex justify-center items-center bg-primary-100 text-primary-700">
-              <StationMap></StationMap>
-            </div>
-            <div className="flex justify-between p-5 text-xs text-primary-700 font-semibold">
-              <span>NEWA Station</span>
-              <span>Offline Station</span>
-              <span>Airport Station</span>
-            </div>
-          </div>
+          <StationMap></StationMap>
         </div>
       </div>
     </section>
