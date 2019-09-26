@@ -57,7 +57,7 @@ const IndexPage = () => (
     </section>
 
     {/* station details and map section */}
-    <section className="mt-24 px-6">
+    <section className="mt-24 px-6 ">
       <div className="flex -mx-6">
         {/* left block */}
         <div className="w-1/2 px-6">

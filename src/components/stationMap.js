@@ -1,7 +1,7 @@
 import React from "react"
 
 import "mapbox-gl/dist/mapbox-gl.css"
-import ReactMapGL, { Marker, NavigationControl } from "react-map-gl"
+import ReactMapGL, { Marker, NavigationControl, Popup } from "react-map-gl"
 import axios from "axios"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -73,10 +73,12 @@ export default function StationMap() {
     height: "100%",
   })
 
+  const [popupInfo, setPopupInfo] = React.useState(null)
+
   const settings = {
     dragPan: true,
     dragRotate: true,
-    scrollZoom: true,
+    scrollZoom: false,
     touchZoom: true,
     touchRotate: true,
     keyboard: true,
@@ -113,9 +115,10 @@ export default function StationMap() {
             mapboxApiAccessToken={process.env.GATSBY_MAPBOX_TOKEN}
             mapStyle="mapbox://styles/mapbox/streets-v11"
             onViewportChange={viewport => setViewport(viewport)}
+            onClick={() => setPopupInfo(null)}
           >
-            <div className="ml-2 mt-2 w-8">
-              <NavigationControl></NavigationControl>
+            <div className="relative">
+              <NavigationControl className="absolute right-0 mr-1 mt-1 z-10"></NavigationControl>
             </div>
 
             {state.data.map(stn => {
@@ -130,6 +133,7 @@ export default function StationMap() {
                       icon={faPlane}
                       rotation={270}
                       className="text-primary-900 opacity-75"
+                      onClick={() => setPopupInfo(stn)}
                     ></FontAwesomeIcon>
                   )}
 
@@ -138,11 +142,29 @@ export default function StationMap() {
                       icon={faCircle}
                       size="xs"
                       className="text-primary-900 opacity-75"
+                      onClick={() =>
+                        popupInfo ? setPopupInfo(null) : setPopupInfo(stn)
+                      }
                     ></FontAwesomeIcon>
                   )}
                 </Marker>
               )
             })}
+
+            {popupInfo && (
+              <Popup
+                tipSize={5}
+                longitude={popupInfo.lon}
+                latitude={popupInfo.lat}
+                closeOnClick={true}
+                closeButton={false}
+                onClose={() => setPopupInfo(null)}
+              >
+                <span className="text-sm text-primary-900">
+                  {popupInfo.name}
+                </span>
+              </Popup>
+            )}
           </ReactMapGL>
         )}
       </div>
