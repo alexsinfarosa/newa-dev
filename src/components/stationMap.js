@@ -142,9 +142,7 @@ export default function StationMap() {
                       icon={faCircle}
                       size="xs"
                       className="text-primary-900 opacity-75"
-                      onClick={() =>
-                        popupInfo ? setPopupInfo(null) : setPopupInfo(stn)
-                      }
+                      onClick={() => setPopupInfo(stn)}
                     ></FontAwesomeIcon>
                   )}
                 </Marker>
@@ -160,7 +158,7 @@ export default function StationMap() {
                 closeButton={false}
                 onClose={() => setPopupInfo(null)}
               >
-                <span className="text-sm text-primary-900">
+                <span className="text-xs text-primary-900">
                   {popupInfo.name}
                 </span>
               </Popup>
