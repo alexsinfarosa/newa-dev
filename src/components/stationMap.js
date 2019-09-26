@@ -1,4 +1,6 @@
 import React from "react"
+
+import "mapbox-gl/dist/mapbox-gl.css"
 import ReactMapGL, { Marker, NavigationControl } from "react-map-gl"
 import axios from "axios"
 
