@@ -19,15 +19,20 @@ import WeatherStationOverview from "../components/weatherStationOverview"
 import Card from "../components/reusable/card"
 import StationMap from "../components/stationMap"
 
+import { usePosition } from "../utils/hooks/usePosition"
+
 const IndexPage = () => {
   const [selectedStation, dispatchSelectedStation] = React.useReducer(
     dataFetchReducer,
     {
       isLoading: false,
       isError: false,
-      data: [],
+      data: null,
     }
   )
+
+  const { latitude, longitude, timestamp, accuracy, error } = usePosition()
+  console.log(latitude, longitude, timestamp, accuracy, error)
 
   return (
     <Layout>

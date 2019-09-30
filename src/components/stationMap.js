@@ -5,13 +5,10 @@ import ReactMapGL, { Marker, NavigationControl, Popup } from "react-map-gl"
 import axios from "axios"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faSpinner } from "@fortawesome/pro-solid-svg-icons"
-import { faPlane, faCircle } from "@fortawesome/pro-solid-svg-icons"
 
-import { stationIdAdjustment } from "../utils/utils"
-import { format } from "date-fns"
+// import { stationIdAdjustment } from "../utils/utils"
+// import { format } from "date-fns"
 import dataFetchReducer from "../utils/dataFetchReducer"
-import { actions } from "xstate"
 
 export default function StationMap({ dispatchSelectedStation }) {
   const [allStations, dispatchAllStations] = React.useReducer(
@@ -74,32 +71,40 @@ export default function StationMap({ dispatchSelectedStation }) {
   const [popupInfo, setPopupInfo] = React.useState(null)
 
   const fetchStationData = async stn => {
-    console.log(stn)
+    // console.log(stn)
     const url = `${window.location.protocol}//data.nrcc.rcc-acis.org/StnData`
     const params = {
       // sid: `${stationIdAdjustment(stn)} ${stn.network}`,
       sid: "kgrr",
       // date: `${format(new Date(), "yyyy-MM-dd")}`,
-      date: "2019-09-20",
-      elems: "maxt",
+      date: "2019-09-29",
+      elems: "gdd",
     }
     console.log(params)
     dispatchSelectedStation({ type: "FETCH_INIT" })
     try {
       const station = await axios.post(url, params)
-      console.log(station)
+      const darkSky = await fetchDarkSkyAPI(stn.lat, stn.lon)
 
-      // const darkSky = fetchDarkSkyAPI(stn.lat, stn.lon)
-      // console.log(darkSky)
+      const payload = {
+        station: { ...stn, data: [station.data.data] },
+        darkSky: {
+          currently: darkSky.data.currently,
+          daily: darkSky.data.daily,
+        },
+      }
+
+      console.log(payload)
 
       const keyList = Object.keys(station.data)
+      console.log(keyList)
       if (keyList.length > 0) {
         if (keyList.includes("error")) {
           dispatchSelectedStation({ type: "FETCH_FAILURE" })
         } else {
           dispatchSelectedStation({
             type: "FETCH_SUCCESS",
-            payload: station.data,
+            payload,
           })
         }
       }
@@ -108,15 +113,11 @@ export default function StationMap({ dispatchSelectedStation }) {
     }
   }
 
-  // const [darkSky, dispatchDarkSky] = React.useReducer(dataFetchReducer, {
-  //   isLoading: false,
-  //   isError: false,
-  //   data: null
-  // })
-  // const fetchDarkSkyAPI = async (lat, lon) => {
-  //   const url = `https://api.darksky.net/forecast/${process.env.GATSBY_DARK_SKY_KEY}/${lat},${lon}`
-  //   return await axios.get(url)
-  // }
+  const fetchDarkSkyAPI = async (lat, lon) => {
+    const removeMe = `https://cors-anywhere.herokuapp.com/` // DEVELOPMENT
+    const url = `${removeMe}https://api.darksky.net/forecast/${process.env.GATSBY_DARK_SKY_KEY}/${lat},${lon}`
+    return axios.get(url)
+  }
 
   return (
     <div className="flex flex-col h-full w-full rounded-lg shadow-lg overflow-hidden">
@@ -135,7 +136,7 @@ export default function StationMap({ dispatchSelectedStation }) {
 
         {allStations.isLoading ? (
           <div className="w-full h-full flex justify-center items-center">
-            <FontAwesomeIcon icon={faSpinner} size="2x" spin></FontAwesomeIcon>
+            <FontAwesomeIcon icon="spinner" size="2x" spin></FontAwesomeIcon>
           </div>
         ) : (
           <ReactMapGL
@@ -156,12 +157,13 @@ export default function StationMap({ dispatchSelectedStation }) {
                   key={`${stn.network}-${stn.id}`}
                   longitude={stn.lon}
                   latitude={stn.lat}
+                  className="cursor-pointer"
                 >
                   {stn.network === "icao" && (
                     <FontAwesomeIcon
-                      icon={faPlane}
+                      icon="plane"
                       rotation={270}
-                      className="text-primary-900 opacity-75"
+                      className="text-primary-900 opacity-75 cursor-pointer hover:text-black"
                       onClick={() => {
                         setPopupInfo(stn)
                         fetchStationData(stn)
@@ -171,9 +173,9 @@ export default function StationMap({ dispatchSelectedStation }) {
 
                   {stn.network !== "icao" && (
                     <FontAwesomeIcon
-                      icon={faCircle}
+                      icon="circle"
                       size="xs"
-                      className="text-primary-900 opacity-75"
+                      className="text-primary-900 opacity-75 cursor-pointer hover:text-black"
                       onClick={() => {
                         setPopupInfo(stn)
                         fetchStationData(stn)
@@ -204,12 +206,12 @@ export default function StationMap({ dispatchSelectedStation }) {
 
       <div className="flex justify-between p-5 text-xs text-primary-900 opacity-75 font-semibold">
         <div>
-          <FontAwesomeIcon icon={faCircle}></FontAwesomeIcon>
+          <FontAwesomeIcon icon="circle"></FontAwesomeIcon>
           <span className="ml-2">NEWA Station</span>
         </div>
 
         <div>
-          <FontAwesomeIcon icon={faPlane} rotation={270}></FontAwesomeIcon>
+          <FontAwesomeIcon icon="plane" rotation={270}></FontAwesomeIcon>
           <span className="ml-2">Airport Station</span>
         </div>
       </div>
