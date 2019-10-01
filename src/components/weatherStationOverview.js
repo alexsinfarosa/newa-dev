@@ -12,7 +12,9 @@ const WeatherStationOverview = ({ selectedStation }) => {
 
   return (
     <Card
-      title={`${data ? data.station.name : "Weather Station Overview"}`}
+      title={`${
+        !isLoading && data ? data.station.name : "Weather Station Overview"
+      }`}
       btnLabel="All Details"
       color="primary"
     >

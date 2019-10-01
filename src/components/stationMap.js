@@ -10,7 +10,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 // import { format } from "date-fns"
 import dataFetchReducer from "../utils/dataFetchReducer"
 
-export default function StationMap({ dispatchSelectedStation }) {
+export default function StationMap({
+  userLat,
+  userLon,
+  dispatchSelectedStation,
+}) {
   const [allStations, dispatchAllStations] = React.useReducer(
     dataFetchReducer,
     {
@@ -19,7 +23,7 @@ export default function StationMap({ dispatchSelectedStation }) {
       data: [],
     }
   )
-
+  console.log({ userLat, userLon })
   React.useEffect(() => {
     let didCancel = false
     const fetchAllStations = async () => {
@@ -62,8 +66,8 @@ export default function StationMap({ dispatchSelectedStation }) {
   }
 
   const [viewport, setViewport] = React.useState({
-    latitude: 42.444,
-    longitude: -76.5019,
+    latitude: userLat ? userLat : 42.444,
+    longitude: userLon ? userLon : -76.5019,
     zoom: 8,
     width: "100%",
     height: "100%",
@@ -72,7 +76,7 @@ export default function StationMap({ dispatchSelectedStation }) {
 
   const fetchStationData = async stn => {
     // console.log(stn)
-    const url = `${window.location.protocol}//data.nrcc.rcc-acis.org/StnData`
+    const url = `${window.location.protocol}//data.rcc-acis.org/StnData`
     const params = {
       // sid: `${stationIdAdjustment(stn)} ${stn.network}`,
       sid: "kgrr",

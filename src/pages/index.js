@@ -32,7 +32,7 @@ const IndexPage = () => {
   )
 
   const { latitude, longitude, timestamp, accuracy, error } = usePosition()
-  console.log(latitude, longitude, timestamp, accuracy, error)
+  // console.log(latitude, longitude, timestamp, accuracy, error)
 
   return (
     <Layout>
@@ -73,8 +73,18 @@ const IndexPage = () => {
         </div>
       </section>
 
+      <section className="mt-8 px-6 bg-gray-100 ">
+        <code>
+          {JSON.stringify(
+            { latitude, longitude, accuracy: `${accuracy}m`, error },
+            null,
+            2
+          )}
+        </code>
+      </section>
+
       {/* station details and map section */}
-      <section className="mt-24 px-6 ">
+      <section className="mt-4 px-6">
         <div className="flex -mx-6">
           {/* left block */}
           <div className="w-1/2 px-6">
@@ -149,6 +159,8 @@ const IndexPage = () => {
           {/* right block */}
           <div className="w-1/2 px-6">
             <StationMap
+              userLat={latitude}
+              userLon={longitude}
               dispatchSelectedStation={dispatchSelectedStation}
             ></StationMap>
           </div>
