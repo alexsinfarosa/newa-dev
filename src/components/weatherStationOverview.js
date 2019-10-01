@@ -8,7 +8,7 @@ import Card from "./reusable/card"
 
 const WeatherStationOverview = ({ selectedStation }) => {
   const { data, isLoading, isError } = selectedStation
-  console.log(data, { isLoading }, { isError })
+  // console.log(data, { isLoading }, { isError })
 
   return (
     <Card

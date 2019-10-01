@@ -6,8 +6,9 @@ import axios from "axios"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
-// import { stationIdAdjustment } from "../utils/utils"
-// import { format } from "date-fns"
+import { stationIdAdjustment } from "../utils/utils"
+import { vXDef } from "../utils/vXDef"
+import { format } from "date-fns"
 import dataFetchReducer from "../utils/dataFetchReducer"
 
 export default function StationMap({
@@ -23,7 +24,7 @@ export default function StationMap({
       data: [],
     }
   )
-  console.log({ userLat, userLon })
+  // console.log({ userLat, userLon })
   React.useEffect(() => {
     let didCancel = false
     const fetchAllStations = async () => {
@@ -75,14 +76,13 @@ export default function StationMap({
   const [popupInfo, setPopupInfo] = React.useState(null)
 
   const fetchStationData = async stn => {
-    // console.log(stn)
-    const url = `${window.location.protocol}//data.rcc-acis.org/StnData`
+    console.log(stn)
+    const url = `${window.location.protocol}//data.nrcc.rcc-acis.org/StnData`
     const params = {
-      // sid: `${stationIdAdjustment(stn)} ${stn.network}`,
-      sid: "kgrr",
-      // date: `${format(new Date(), "yyyy-MM-dd")}`,
-      date: "2019-09-29",
-      elems: "gdd",
+      sid: `${stationIdAdjustment(stn)}`,
+      sdate: `2019-03-01`,
+      edate: "2019-10-01",
+      elems: [{ vX: vXDef[stn.network]["temp"] }],
     }
     console.log(params)
     dispatchSelectedStation({ type: "FETCH_INIT" })
