@@ -9,62 +9,29 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { stationIdAdjustment } from "../utils/utils"
 import { vXDef } from "../utils/vXDef"
 import { format } from "date-fns"
-import dataFetchReducer from "../utils/dataFetchReducer"
+
+import useFetchAllStations from "../utils/hooks/useFetchAllStations"
+
+const settings = {
+  dragPan: true,
+  dragRotate: true,
+  scrollZoom: false,
+  touchZoom: true,
+  touchRotate: true,
+  keyboard: true,
+  doubleClickZoom: true,
+  minZoom: 0,
+  maxZoom: 20,
+  minPitch: 0,
+  maxPitch: 85,
+}
 
 export default function StationMap({
   userLat,
   userLon,
   dispatchSelectedStation,
 }) {
-  const [allStations, dispatchAllStations] = React.useReducer(
-    dataFetchReducer,
-    {
-      isLoading: false,
-      isError: false,
-      data: [],
-    }
-  )
-  // console.log({ userLat, userLon })
-  React.useEffect(() => {
-    let didCancel = false
-    const fetchAllStations = async () => {
-      dispatchAllStations({ type: "FETCH_INIT" })
-      try {
-        const result = await axios.get(
-          `${window.location.protocol}//newa2.nrcc.cornell.edu/newaUtil/stateStationList/all`
-        )
-        if (!didCancel) {
-          dispatchAllStations({
-            type: "FETCH_SUCCESS",
-            payload: result.data.stations,
-          })
-        }
-      } catch (error) {
-        if (!didCancel) {
-          dispatchAllStations({ type: "FETCH_FAILURE" })
-        }
-      }
-    }
-    fetchAllStations()
-
-    return () => {
-      didCancel = true
-    }
-  }, [])
-
-  const settings = {
-    dragPan: true,
-    dragRotate: true,
-    scrollZoom: false,
-    touchZoom: true,
-    touchRotate: true,
-    keyboard: true,
-    doubleClickZoom: true,
-    minZoom: 0,
-    maxZoom: 20,
-    minPitch: 0,
-    maxPitch: 85,
-  }
+  const { data: allStations, isLoading, isError } = useFetchAllStations()
 
   const [viewport, setViewport] = React.useState({
     latitude: userLat ? userLat : 42.444,
@@ -75,52 +42,34 @@ export default function StationMap({
   })
   const [popupInfo, setPopupInfo] = React.useState(null)
 
-  const fetchStationData = async stn => {
-    console.log(stn)
+  const fetchHourlyData = async stn => {
     const url = `${window.location.protocol}//data.nrcc.rcc-acis.org/StnData`
     const params = {
-      sid: `${stationIdAdjustment(stn)}`,
-      sdate: `2019-03-01`,
-      edate: "2019-10-01",
-      elems: [{ vX: vXDef[stn.network]["temp"] }],
+      sid: `${stationIdAdjustment(stn)} ${stn.network}`,
+      sdate: `${new Date().getFullYear()}-03-01`,
+      edate: `${format(new Date(), "yyyy-MM-dd")}`,
+      elems: [
+        { vX: vXDef[stn.network]["temp"] },
+        { vX: vXDef[stn.network]["rhum"] },
+      ],
     }
-    console.log(params)
+
     dispatchSelectedStation({ type: "FETCH_INIT" })
     try {
       const station = await axios.post(url, params)
-      const darkSky = await fetchDarkSkyAPI(stn.lat, stn.lon)
-
-      const payload = {
-        station: { ...stn, data: [station.data.data] },
-        darkSky: {
-          currently: darkSky.data.currently,
-          daily: darkSky.data.daily,
-        },
-      }
-
-      console.log(payload)
 
       const keyList = Object.keys(station.data)
-      console.log(keyList)
-      if (keyList.length > 0) {
-        if (keyList.includes("error")) {
-          dispatchSelectedStation({ type: "FETCH_FAILURE" })
-        } else {
-          dispatchSelectedStation({
-            type: "FETCH_SUCCESS",
-            payload,
-          })
-        }
+      if (keyList.includes("error")) {
+        dispatchSelectedStation({ type: "FETCH_FAILURE" })
+      } else {
+        dispatchSelectedStation({
+          type: "FETCH_SUCCESS",
+          payload: station.data,
+        })
       }
     } catch (error) {
       dispatchSelectedStation({ type: "FETCH_FAILURE" })
     }
-  }
-
-  const fetchDarkSkyAPI = async (lat, lon) => {
-    const removeMe = `https://cors-anywhere.herokuapp.com/` // DEVELOPMENT
-    const url = `${removeMe}https://api.darksky.net/forecast/${process.env.GATSBY_DARK_SKY_KEY}/${lat},${lon}`
-    return axios.get(url)
   }
 
   return (
@@ -132,13 +81,13 @@ export default function StationMap({
       </div>
 
       <div className="flex-1 flex justify-center items-center">
-        {allStations.isError && (
+        {isError && (
           <div className="text-center">
             Unable to place stations on the map...
           </div>
         )}
 
-        {allStations.isLoading ? (
+        {isLoading ? (
           <div className="w-full h-full flex justify-center items-center">
             <FontAwesomeIcon icon="spinner" size="2x" spin></FontAwesomeIcon>
           </div>
@@ -155,7 +104,7 @@ export default function StationMap({
               <NavigationControl className="absolute right-0 mr-1 mt-1 z-10"></NavigationControl>
             </div>
 
-            {allStations.data.map(stn => {
+            {allStations.map(stn => {
               return (
                 <Marker
                   key={`${stn.network}-${stn.id}`}
@@ -170,7 +119,7 @@ export default function StationMap({
                       className="text-primary-900 opacity-75 cursor-pointer hover:text-black"
                       onClick={() => {
                         setPopupInfo(stn)
-                        fetchStationData(stn)
+                        fetchHourlyData(stn)
                       }}
                     ></FontAwesomeIcon>
                   )}
@@ -182,7 +131,7 @@ export default function StationMap({
                       className="text-primary-900 opacity-75 cursor-pointer hover:text-black"
                       onClick={() => {
                         setPopupInfo(stn)
-                        fetchStationData(stn)
+                        fetchHourlyData(stn)
                       }}
                     ></FontAwesomeIcon>
                   )}

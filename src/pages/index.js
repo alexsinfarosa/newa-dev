@@ -12,14 +12,14 @@ import {
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 
-import dataFetchReducer from "../utils/dataFetchReducer"
+import dataFetchReducer from "../utils/reducers/dataFetchReducer"
 
 import Carousel from "../components/carousel"
 import WeatherStationOverview from "../components/weatherStationOverview"
 import Card from "../components/reusable/card"
 import StationMap from "../components/stationMap"
 
-import { usePosition } from "../utils/hooks/usePosition"
+// import { usePosition } from "../utils/hooks/usePosition"
 
 const IndexPage = () => {
   const [selectedStation, dispatchSelectedStation] = React.useReducer(
@@ -31,7 +31,9 @@ const IndexPage = () => {
     }
   )
 
-  const { latitude, longitude, timestamp, accuracy, error } = usePosition()
+  // const { latitude, longitude, timestamp, accuracy, error } = usePosition()
+  const latitude = null
+  const longitude = null
   // console.log(latitude, longitude, timestamp, accuracy, error)
 
   return (
@@ -73,7 +75,7 @@ const IndexPage = () => {
         </div>
       </section>
 
-      <section className="mt-8 px-6 bg-gray-100 ">
+      {/* <section className="mt-8 px-6 bg-gray-100 ">
         <code>
           {JSON.stringify(
             { latitude, longitude, accuracy: `${accuracy}m`, error },
@@ -81,10 +83,10 @@ const IndexPage = () => {
             2
           )}
         </code>
-      </section>
+      </section> */}
 
       {/* station details and map section */}
-      <section className="mt-4 px-6">
+      <section className="mt-24 px-6">
         <div className="flex -mx-6">
           {/* left block */}
           <div className="w-1/2 px-6">
