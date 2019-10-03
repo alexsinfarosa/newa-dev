@@ -99,9 +99,12 @@ export const dailyToHourlyDatesLST = (sdate, edate) => {
   let results = []
   results.push(startDay)
 
-  while (isBefore(startDay, endDay)) {
-    startDay = addHours(startDay, 1)
-    if (isBefore(startDay, endDay) || isEqual(startDay, endDay)) {
+  while (isBefore(new Date(startDay), new Date(endDay))) {
+    startDay = addHours(new Date(startDay), 1)
+    if (
+      isBefore(new Date(startDay), new Date(endDay)) ||
+      isEqual(new Date(startDay), new Date(endDay))
+    ) {
       results.push(startDay)
     }
   }
@@ -109,8 +112,11 @@ export const dailyToHourlyDatesLST = (sdate, edate) => {
 }
 
 export const dailyToHourlyDates = date => {
-  const numOfHours = dailyToHourlyDatesLST(startOfDay(date), endOfDay(date))
-  const hoursArr = numOfHours.map(h => getHours(h))
+  const numOfHours = dailyToHourlyDatesLST(
+    startOfDay(new Date(date)),
+    endOfDay(new Date(date))
+  )
+  const hoursArr = numOfHours.map(h => getHours(new Date(h)))
   let results = hoursArr.map(hour => {
     if (hour >= 0 && hour <= 9) hour = `0${hour}`
     return `${date} ${hour}:00`

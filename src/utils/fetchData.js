@@ -1,27 +1,24 @@
 import axios from "axios"
-import { format, addDays } from "date-fns"
+import { format, addDays, isSameYear } from "date-fns"
 import cleanFetchedData from "./cleanFetchedData"
 
 const protocol = window.location.protocol
-const dateFormat = "YYYY-MM-DD"
 
-// Fetch selected station hourly data ---------------------------------------------------
-const url = `${protocol}//data.nrcc.rcc-acis.org/StnData`
-export const fetchCurrentStationHourlyData = params => {
-  return axios
-    .post(url, params)
-    .then(res => res.data)
-    .catch(err => console.log("Failed to load station data ", err))
+const errorFromAcis = data => {
+  const keyList = Object.keys(data)
+  if (keyList.includes("error")) {
+    console.error("ACIS returned an error")
+  }
+  return data
 }
 
 // Fetch selected station hourly data ---------------------------------------------------
-export const fetchCurrentStationHourlyDataNEW = async params => {
-  const url = `${protocol}//data.nrcc.rcc-acis.org/StnData`
-  try {
-    return await axios.post(url, params)
-  } catch (error) {
-    console.log("Failed to load station data ", err)
-  }
+export const fetchCurrentStationHourlyData = params => {
+  const url = `${protocol}//data.rcc-acis.org/StnData`
+  return axios
+    .post(url, params)
+    .then(res => errorFromAcis(res.data))
+    .catch(err => console.log("Failed to load station data ", err))
 }
 
 // Fetch sister station Id and network -----------------------------------------------------
@@ -37,29 +34,30 @@ const fetchSisterStationIdAndNetwork = params => {
 
 // Fetch sister station hourly data --------------------------------------------------------
 export const fetchSisterStationHourlyData = params => {
-  const url = `${protocol}//data.nrcc.rcc-acis.org/StnData`
+  const url = `${protocol}//data.rcc-acis.org/StnData`
   return axios
     .post(url, params)
-    .then(res => res.data)
+    .then(res => errorFromAcis(res.data))
     .catch(err => console.log("Failed to load sister station data ", err))
 }
 
 // Fetch forecast hourly data --------------------------------------------------------------
-const forecastUrl = `${protocol}//newa2.nrcc.cornell.edu/newaUtil/getFcstData`
 const fetchHourlyForcestData = params => {
+  const url = `${protocol}//newa2.nrcc.cornell.edu/newaUtil/getFcstData`
   // always need to add 5 days
-  const plusFiveDays = format(addDays(new Date(), 5), dateFormat)
+  const plusFiveDays = format(addDays(new Date(), 5), "yyyy-MM-dd")
   const [id, network] = params.sid.split(" ")
 
   return axios
-    .get(`${forecastUrl}/${id}/${network}/temp/${params.sdate}/${plusFiveDays}`)
-    .then(res => res.data)
+    .get(`${url}/${id}/${network}/temp/${params.sdate}/${plusFiveDays}`)
+    .then(res => errorFromAcis(res.data))
     .catch(err => console.log("Failed to load hourly forecast data", err))
 }
 
 // Main Function
 export default async params => {
-  const results = new Map()
+  // console.log(params)
+  let results = {}
 
   // get current station hourly data
   const currentStation = await fetchCurrentStationHourlyData(params)
@@ -70,22 +68,23 @@ export default async params => {
   // get sister station hourly data
   let sisParams = { ...params }
   sisParams.sid = sisterStationIdAndNetwork
+
   const sisterStation = await fetchSisterStationHourlyData(sisParams)
 
-  if (params.isThisYear) {
+  if (isSameYear(new Date(), new Date(params.edate))) {
     // get forecast hourly data
     const forecastData = await fetchHourlyForcestData(params)
-    results.set("forecast", forecastData.data)
+    results["forecast"] = forecastData.data
   }
 
-  results.set("currentStn", currentStation.data)
-  results.set("tzo", currentStation.meta.tzo)
-  results.set("sisterStn", sisterStation.data)
+  results["currentStn"] = currentStation.data
+  results["tzo"] = currentStation.meta.tzo
+  results["sisterStn"] = sisterStation.data
 
   // clean data
-  // console.log(results, params);
+  console.log(results, params)
   const cleaned = cleanFetchedData(results, params)
 
-  // console.log(cleaned);
-  return cleaned
+  // console.log(cleaned)
+  // return cleaned
 }

@@ -42,13 +42,13 @@ const IndexPage = () => {
 
       {/* carousel section */}
       <section>
-        <div className="text-center tracking-wider text-2xl py-4 font-light">
-          Your source for <span className="font-normal">weather</span> and{" "}
-          <span className="font-normal">integrated pest management</span> in the
-          North East
-        </div>
+        <h2 className="text-gray-900 text-center py-4 text-2xl">
+          Your source for <span className="font-semibold">weather</span> and{" "}
+          <span className="font-semibold">integrated pest management</span> in
+          the North East
+        </h2>
 
-        <div>
+        <div className="mt-4">
           <Carousel></Carousel>
         </div>
       </section>
@@ -170,7 +170,7 @@ const IndexPage = () => {
       </section>
 
       {/* blog section */}
-      <section className="mt-24 p-6 bg-secondary-100">
+      <section className="mt-24 p-6 bg-gray-100">
         <h2 className="text-6xl font-semibold text-secondary-900 text-center">
           Recent News
         </h2>

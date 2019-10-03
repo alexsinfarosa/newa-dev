@@ -7,10 +7,11 @@ import axios from "axios"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 import { stationIdAdjustment } from "../utils/utils"
-import { vXDef } from "../utils/vXDef"
+import { vXdef } from "../utils/vXdef"
 import { format } from "date-fns"
 
 import useFetchAllStations from "../utils/hooks/useFetchAllStations"
+import fetchData from "../utils/fetchData"
 
 const settings = {
   dragPan: true,
@@ -43,30 +44,25 @@ export default function StationMap({
   const [popupInfo, setPopupInfo] = React.useState(null)
 
   const fetchHourlyData = async stn => {
-    const url = `${window.location.protocol}//data.nrcc.rcc-acis.org/StnData`
     const params = {
       sid: `${stationIdAdjustment(stn)} ${stn.network}`,
       sdate: `${new Date().getFullYear()}-03-01`,
       edate: `${format(new Date(), "yyyy-MM-dd")}`,
+      meta: "tzo",
       elems: [
-        { vX: vXDef[stn.network]["temp"] },
-        { vX: vXDef[stn.network]["rhum"] },
+        { vX: vXdef[stn.network]["temp"] },
+        { vX: vXdef[stn.network]["rhum"] },
       ],
     }
 
     dispatchSelectedStation({ type: "FETCH_INIT" })
     try {
-      const station = await axios.post(url, params)
-
-      const keyList = Object.keys(station.data)
-      if (keyList.includes("error")) {
-        dispatchSelectedStation({ type: "FETCH_FAILURE" })
-      } else {
-        dispatchSelectedStation({
-          type: "FETCH_SUCCESS",
-          payload: station.data,
-        })
-      }
+      const data = await fetchData(params)
+      console.log(data)
+      dispatchSelectedStation({
+        type: "FETCH_SUCCESS",
+        payload: data,
+      })
     } catch (error) {
       dispatchSelectedStation({ type: "FETCH_FAILURE" })
     }

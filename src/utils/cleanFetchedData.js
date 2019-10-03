@@ -1,4 +1,4 @@
-import { format, startOfDay, endOfDay } from "date-fns/esm"
+import { format, startOfDay, endOfDay } from "date-fns"
 import {
   averageMissingValues,
   flatten,
@@ -8,10 +8,10 @@ import {
 
 export default (acisData, params) => {
   // tzo
-  const tzo = acisData.get("tzo")
+  const tzo = acisData.tzo
 
   // current station
-  const currentStn = acisData.get("currentStn")
+  const currentStn = acisData.currentStn
 
   // dates has date of interest +5 days
   let dates = currentStn.map(arr => arr[0])
@@ -22,7 +22,7 @@ export default (acisData, params) => {
 
   let replaced = currentStnValues
   // sister station
-  const sisterStn = acisData.get("sisterStn")
+  const sisterStn = acisData.sisterStn
   if (sisterStn) {
     // a station can have not data at all and return an error
     const sisterStnValues = flatten(sisterStn.map(arr => arr[1]))
@@ -33,7 +33,7 @@ export default (acisData, params) => {
 
   // if date of interest is in current year
   if (params.isThisYear) {
-    const forecast = acisData.get("forecast")
+    const forecast = acisData.forecast
     const forecastValues = flatten(forecast.map(arr => arr[1]))
 
     // replace missing values with forecast data
@@ -87,8 +87,10 @@ export default (acisData, params) => {
   )
 
   dates.forEach((date, i) => {
-    const numOfHours = dailyToHourlyDatesLST(startOfDay(date), endOfDay(date))
-      .length
+    const numOfHours = dailyToHourlyDatesLST(
+      startOfDay(new Date(date)),
+      endOfDay(new Date(date))
+    ).length
 
     right = left + numOfHours
 
