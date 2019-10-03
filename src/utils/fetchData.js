@@ -82,9 +82,9 @@ export default async params => {
   results["sisterStn"] = sisterStation.data
 
   // clean data
-  console.log(results, params)
+  // console.log(results, params)
   const cleaned = cleanFetchedData(results, params)
 
   // console.log(cleaned)
-  // return cleaned
+  return cleaned
 }

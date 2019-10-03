@@ -7,6 +7,44 @@ import {
   getHours,
 } from "date-fns"
 
+export const calculateGdd = (dailyData, base = 50) => {
+  let cdd = 0
+
+  return dailyData.map(obj => {
+    const { date, temps } = obj
+    const countMissingValues = temps.filter(t => isNaN(t) || t === "M").length
+    let p = {}
+
+    if (countMissingValues < 5) {
+      const filtered = temps.filter(d => d)
+      const min = Math.min(...filtered)
+      const max = Math.max(...filtered)
+      const avg = (min + max) / 2
+
+      const dd = avg - base > 0 ? avg - base : 0
+
+      cdd += dd
+      p.missingData = false
+      p.date = date
+      p.min = min
+      p.avg = avg
+      p.max = max
+      p.dd = dd
+      p.cdd = cdd
+    } else {
+      p.missingData = true
+      p.date = date
+      p.min = "N/A"
+      p.avg = "N/A"
+      p.max = "N/A"
+      p.dd = "N/A"
+      p.cdd = "N/A"
+    }
+    // console.log(p, missingDays)
+    return { ...p }
+  })
+}
+
 // Handling station ID adjustment for some networks or states
 export const stationIdAdjustment = stn => {
   // Michigan

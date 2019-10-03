@@ -3,12 +3,14 @@ import React from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import MapIcon from "../utils/weatherIcons"
 import { format } from "date-fns"
+import { calculateGdd } from "../utils/utils"
 
 import Card from "./reusable/card"
 
 const WeatherStationOverview = ({ selectedStation }) => {
   const { data, isLoading, isError } = selectedStation
-  // console.log(data, isLoading, isError)
+  console.log(data, isLoading, isError)
+
   return (
     <Card
       title={

@@ -7,6 +7,7 @@ import {
 } from "./utils"
 
 export default (acisData, params) => {
+  console.log(acisData, params)
   // tzo
   const tzo = acisData.tzo
 
@@ -32,7 +33,7 @@ export default (acisData, params) => {
   }
 
   // if date of interest is in current year
-  if (params.isThisYear) {
+  if (Object.keys(acisData).includes("forecast")) {
     const forecast = acisData.forecast
     const forecastValues = flatten(forecast.map(arr => arr[1]))
 
@@ -42,6 +43,8 @@ export default (acisData, params) => {
     )
   }
 
+  // console.log(replaced)
+  // console.log(dates)
   ///////////////////////////////////////////////////////////////////////////////////////
   // transforming data to local time
   // ////////////////////////////////////////////////////////////////////////////////////
@@ -55,16 +58,19 @@ export default (acisData, params) => {
     .reduce((acc, results) => [...acc, ...results], [])
 
   // array of indeces where the hour must be shifted
-  const arrOFIndeces = hourlyDates.map((hour, i) => {
-    const tzoFromDate = parseInt(format(new Date(hour), "Z"), 10)
-    return tzoFromDate !== tzo ? i : null
+
+  const localTzo = parseInt(format(new Date(), "X"), 10)
+  const tzoDiff = tzo - localTzo
+  const arrOFIndeces = hourlyDates.map((dateWithHour, i) => {
+    const localTzo = parseInt(format(new Date(dateWithHour), "X"), 10)
+    // console.log(i, dateWithHour, localTzo, localTzo + tzoDiff, tzo)
+    return localTzo + tzoDiff !== tzo ? i : null
   })
 
   // removing null values
   const indices = arrOFIndeces.filter(d => d)
 
   // generating the array of objects
-
   let hourlyData = []
   let dailyData = []
 
@@ -83,10 +89,10 @@ export default (acisData, params) => {
 
   // the valuesShifted array has the hour shifted
   const valuesDailysShifted = valuesDaily.map((v, i) =>
-    v in indices ? valuesDaily[i - 1] : v
+    v in indices ? parseInt(valuesDaily[i - 1], 10) : parseInt(v, 10)
   )
 
-  dates.forEach((date, i) => {
+  dates.forEach(date => {
     const numOfHours = dailyToHourlyDatesLST(
       startOfDay(new Date(date)),
       endOfDay(new Date(date))
@@ -105,10 +111,10 @@ export default (acisData, params) => {
   hourlyDates.forEach((hour, i) => {
     let p = {}
     p["date"] = new Date(hour)
-    p["temp"] = valuesHourlyShifted[i]
+    p["temp"] = parseInt(valuesHourlyShifted[i], 10)
     hourlyData.push(p)
   })
 
-  // console.log(dailyData, hourlyData);
-  return [dailyData, hourlyData]
+  console.log(dailyData, hourlyData)
+  return { dailyData, hourlyData }
 }
