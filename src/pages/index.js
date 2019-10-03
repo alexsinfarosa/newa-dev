@@ -54,10 +54,10 @@ const IndexPage = () => {
       </section>
 
       {/* search section */}
-      <section className="mt-16 text-center max-w-xl m-auto">
-        <h3 className="text-5xl font-semibold text-gray-800">
+      <section className="mt-16 text-center  m-auto">
+        <h2 className="text-6xl font-semibold text-gray-800">
           Find a Weather Station
-        </h3>
+        </h2>
         <p className="text-gray-700 text-xl">
           for up-to-date pest forecasts and weather data
         </p>
@@ -171,9 +171,9 @@ const IndexPage = () => {
 
       {/* blog section */}
       <section className="mt-24 p-6 bg-secondary-100">
-        <h3 className="text-5xl font-semibold text-secondary-900 text-center">
+        <h2 className="text-6xl font-semibold text-secondary-900 text-center">
           Recent News
-        </h3>
+        </h2>
 
         <div className="mt-12 flex flex-wrap -mx-6 overflow-hidden">
           {[
@@ -202,7 +202,7 @@ const IndexPage = () => {
           })}
 
           <div className="mt-16 m-auto">
-            <button className="flex items-center py-2 px-4 text-2xl tracking-wider bg-white text-secondary-900 rounded-full border border-secondary-200 hover:text-secondary-700">
+            <button className="flex items-center py-2 px-4 text-2xl tracking-wider bg-white text-secondary-900 rounded-full border border-secondary-100 hover:border-secondary-200 hover:text-secondary-700">
               See All News{" "}
               <span className="ml-3">
                 <FontAwesomeIcon icon={faArrowRight} />
@@ -215,7 +215,7 @@ const IndexPage = () => {
       {/* footer section */}
       <footer>
         <section className="p-12 mt-16">
-          <h3 className="text-4xl text-center">Disclaimer</h3>
+          <h4 className="text-5xl text-center">Disclaimer</h4>
           <p className=" w-3/5 mt-4 m-auto text-center  leading-relaxed">
             Accuracy of the weather data is the responsibility of the owners of
             the weather station instruments. NEWA is not responsible for
@@ -236,7 +236,7 @@ const IndexPage = () => {
         <section className="p-12 mt-6">
           <div className="flex flex-wrap -mx-4 overflow-hidden text-gray-700">
             <div className="my-4 px-4 w-1/3 overflow-hidden">
-              <h3 className="text-3xl font-semibold">Brought to You By:</h3>
+              <h4 className="text-4xl font-semibold">Brought to You By:</h4>
             </div>
 
             <div className="my-4 px-4 w-2/3 overflow-hidden">

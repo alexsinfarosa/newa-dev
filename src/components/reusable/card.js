@@ -17,7 +17,7 @@ const Card = ({ title, children, btnLabel, color }) => {
         </h3>
 
         <button
-          className={`flex items-center py-2 px-4 bg-white text-${color}-900 rounded-full border border-${color}-300 hover:text-${color}-700`}
+          className={`flex items-center py-2 px-4 bg-white text-${color}-900 rounded-full border border-${color}-300 hover:border-${color}-500 hover:text-${color}-700`}
           style={{ minWidth: 140 }}
         >
           {btnLabel}
