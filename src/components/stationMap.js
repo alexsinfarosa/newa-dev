@@ -2,12 +2,12 @@ import React from "react"
 
 import "mapbox-gl/dist/mapbox-gl.css"
 import ReactMapGL, { Marker, NavigationControl, Popup } from "react-map-gl"
-import axios from "axios"
+// import axios from "axios"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 import { stationIdAdjustment } from "../utils/utils"
-import { vXdef } from "../utils/vXdef"
+import vXdef from "../utils/vXdefNEW.json"
 import { format } from "date-fns"
 
 import useFetchAllStations from "../utils/hooks/useFetchAllStations"
@@ -45,15 +45,17 @@ export default function StationMap({
   const [popupInfo, setPopupInfo] = React.useState(null)
 
   const fetchHourlyData = async stn => {
+    const vX = JSON.parse(JSON.stringify(vXdef)).find(
+      e => e.network === stn.network
+    )
+
     const params = {
       sid: `${stationIdAdjustment(stn)} ${stn.network}`,
       sdate: `${new Date().getFullYear() - 1}-12-31`,
       edate: `${format(new Date(), "yyyy-MM-dd")}`,
       meta: "tzo",
-      elems: [
-        { vX: vXdef[stn.network]["temp"] },
-        { vX: vXdef[stn.network]["rhum"] },
-      ],
+      elems: [{ vX: vX["temp"] }, { vX: vX["rhum"] }],
+      eleList: ["temp", "rhum"],
     }
 
     dispatchSelectedStation({ type: "FETCH_INIT" })

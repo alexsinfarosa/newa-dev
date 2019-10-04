@@ -6,47 +6,63 @@ import {
   dailyToHourlyDates,
 } from "./utils"
 
+import { zonedTimeToUtc } from "date-fns-tz"
+
 export default (acisData, params) => {
-  console.log(acisData, params)
+  console.log(acisData)
   // tzo
   const tzo = acisData.tzo
 
   // current station
-  const currentStn = acisData.currentStn
+  const currentStn = [...acisData.currentStn]
 
-  // dates has date of interest +5 days
-  let dates = currentStn.map(arr => arr[0])
-
-  const currentStnValues = averageMissingValues(
-    flatten(currentStn.map(arr => arr[1]))
+  const currentStnValues = params.eleList.map((el, i) =>
+    averageMissingValues(flatten(currentStn.map(arr => arr[i + 1])))
   )
+  console.log({ currentStnValues })
 
   let replaced = currentStnValues
   // sister station
-  const sisterStn = acisData.sisterStn
+  const sisterStn = [...acisData.sisterStn]
   if (sisterStn) {
     // a station can have not data at all and return an error
-    const sisterStnValues = flatten(sisterStn.map(arr => arr[1]))
+    const sisterStnValues = params.eleList.map((el, i) => {
+      return averageMissingValues(flatten(sisterStn.map(arr => arr[i + 1])))
+    })
+
+    console.log({ sisterStnValues })
 
     // replace current station values with sister station's
-    replaced = replaced.map((t, i) => (t === "M" ? sisterStnValues[i] : t))
+    replaced = params.eleList.map((el, i) => {
+      return replaced[i].map((val, t) =>
+        val === "M" ? sisterStnValues[i][t] : val
+      )
+    })
   }
+
+  // dates from DEC 31 up to date of interest (not including forecast)
+  let dates = currentStn.map(arr => arr[0])
 
   // if date of interest is in current year
   if (Object.keys(acisData).includes("forecast")) {
     const forecast = acisData.forecast
-    const forecastValues = flatten(forecast.map(arr => arr[1]))
+    dates = forecast.map(arr => arr[0])
+    const forecastValues = params.eleList.map((el, i) => {
+      return flatten(forecast.map(arr => arr[i + 1]))
+    })
 
     // replace missing values with forecast data
-    replaced = replaced.map((t, i) =>
-      t === "M" ? forecastValues[i].toString() : t
-    )
+    replaced = params.eleList.map((el, i) => {
+      return replaced[i].map((val, t) =>
+        val === "M" ? forecastValues[i][t] : val
+      )
+    })
   }
 
-  // console.log(replaced)
-  // console.log(dates)
+  console.log("forecast", replaced)
+
   ///////////////////////////////////////////////////////////////////////////////////////
-  // transforming data to local time
+  // Shifting and converting data to local time
   // ////////////////////////////////////////////////////////////////////////////////////
 
   // dates go from yyyy-01-01 to dateOfInterest (yyyy-mm-dd)
@@ -58,13 +74,19 @@ export default (acisData, params) => {
     .reduce((acc, results) => [...acc, ...results], [])
 
   // array of indeces where the hour must be shifted
-
-  const localTzo = parseInt(format(new Date(), "X"), 10)
-  const tzoDiff = tzo - localTzo
   const arrOFIndeces = hourlyDates.map((dateWithHour, i) => {
-    const localTzo = parseInt(format(new Date(dateWithHour), "X"), 10)
-    // console.log(i, dateWithHour, localTzo, localTzo + tzoDiff, tzo)
-    return localTzo + tzoDiff !== tzo ? i : null
+    const timeZoneName = {
+      5: "America/New_York",
+      6: "America/Chicago",
+      7: "America/Denver",
+      8: "America/Los_Angeles",
+    }
+    const utcDate = new Date(dateWithHour).toISOString()
+    const localTzo = zonedTimeToUtc(utcDate, {
+      timeZone: "America/New_York",
+    })
+    console.log(i, localTzo, tzo)
+    return localTzo !== tzo ? i : null
   })
 
   // removing null values
@@ -115,6 +137,6 @@ export default (acisData, params) => {
     hourlyData.push(p)
   })
 
-  console.log(dailyData, hourlyData)
+  // console.log(dailyData, hourlyData)
   return { dailyData, hourlyData }
 }

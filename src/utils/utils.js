@@ -92,7 +92,6 @@ const weightedMean = res => {
 }
 
 export const averageMissingValues = d => {
-  // console.log(d);
   if (d.includes("M")) {
     if (d[0] === "M" && d[1] !== "M") d[0] = d[1]
     if (d[0] === "M" && d[1] === "M" && d[2] !== "M") {
@@ -107,24 +106,24 @@ export const averageMissingValues = d => {
       d[len - 1] = d[len - 2]
     }
 
-    return d.map((t, i) => {
-      if (d[i - 1] !== "M" && t === "M" && d[i + 1] !== "M") {
+    return d.map((val, i) => {
+      if (d[i - 1] !== "M" && val === "M" && d[i + 1] !== "M") {
         return avgTwoStringNumbers(d[i - 1], d[i + 1])
       }
 
       if (
         d[i - 1] !== "M" &&
-        t === "M" &&
+        val === "M" &&
         d[i + 1] === "M" &&
         d[i + 2] !== "M"
       ) {
         const arr = [d[i - 1], d[i], d[i + 1], d[i + 2]]
         const rep = weightedMean(arr)
-        t = rep[0]
+        val = rep[0]
         d[i + 1] = rep[1]
       }
 
-      return t
+      return val
     })
   }
   return d

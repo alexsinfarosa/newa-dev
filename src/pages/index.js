@@ -90,9 +90,11 @@ const IndexPage = () => {
         <div className="flex -mx-6">
           {/* left block */}
           <div className="w-1/2 px-6">
-            <WeatherStationOverview
-              selectedStation={selectedStation}
-            ></WeatherStationOverview>
+            {false && (
+              <WeatherStationOverview
+                selectedStation={selectedStation}
+              ></WeatherStationOverview>
+            )}
 
             <div className="mt-10">
               <Card

@@ -1,9 +1,9 @@
 import React from "react"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import MapIcon from "../utils/weatherIcons"
-import { format } from "date-fns"
-import { calculateGdd } from "../utils/utils"
+// import MapIcon from "../utils/weatherIcons"
+// import { format } from "date-fns"
+// import { calculateGdd } from "../utils/utils"
 
 import Card from "./reusable/card"
 

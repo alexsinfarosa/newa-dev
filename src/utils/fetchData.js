@@ -1,4 +1,6 @@
 import axios from "axios"
+import axiosWithDelimiter from "./axiosWithDelimiter"
+
 import { format, addDays, isSameYear } from "date-fns"
 import cleanFetchedData from "./cleanFetchedData"
 
@@ -42,16 +44,33 @@ export const fetchSisterStationHourlyData = params => {
 }
 
 // Fetch forecast hourly data --------------------------------------------------------------
-const fetchHourlyForcestData = params => {
+const fetchHourlyForcestData = async params => {
   const url = `${protocol}//newa2.nrcc.cornell.edu/newaUtil/getFcstData`
   // always need to add 5 days
   const plusFiveDays = format(addDays(new Date(), 5), "yyyy-MM-dd")
   const [id, network] = params.sid.split(" ")
 
-  return axios
-    .get(`${url}/${id}/${network}/temp/${params.sdate}/${plusFiveDays}`)
-    .then(res => errorFromAcis(res.data))
-    .catch(err => console.log("Failed to load hourly forecast data", err))
+  let req = params.eleList.map(el =>
+    axiosWithDelimiter
+      .get(`${url}/${id}/${network}/${el}/${params.sdate}/${plusFiveDays}`)
+      .then(res => res.data)
+      .catch(err =>
+        console.log(`Failed to load ${el} hourly forecast data`, err)
+      )
+  )
+
+  const data = await Promise.all(req)
+  let results = data[0].data
+
+  data.forEach((el, i) => {
+    if (i > 0) {
+      el.data.forEach((day, t) => {
+        results[t].push(day[1])
+      })
+    }
+  })
+  // console.log(results)
+  return results
 }
 
 // Main Function
@@ -74,7 +93,7 @@ export default async params => {
   if (isSameYear(new Date(), new Date(params.edate))) {
     // get forecast hourly data
     const forecastData = await fetchHourlyForcestData(params)
-    results["forecast"] = forecastData.data
+    results["forecast"] = forecastData
   }
 
   results["currentStn"] = currentStation.data
