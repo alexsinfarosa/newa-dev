@@ -1,4 +1,4 @@
-import { format, startOfDay, endOfDay } from "date-fns"
+import { startOfDay, endOfDay } from "date-fns"
 import {
   averageMissingValues,
   flatten,
@@ -6,10 +6,10 @@ import {
   dailyToHourlyDates,
 } from "./utils"
 
-import { zonedTimeToUtc } from "date-fns-tz"
+import { format } from "date-fns-tz"
 
 export default (acisData, params) => {
-  console.log(acisData)
+  // console.log(acisData)
   // tzo
   const tzo = acisData.tzo
 
@@ -30,7 +30,7 @@ export default (acisData, params) => {
       return averageMissingValues(flatten(sisterStn.map(arr => arr[i + 1])))
     })
 
-    console.log({ sisterStnValues })
+    // console.log({ sisterStnValues })
 
     // replace current station values with sister station's
     replaced = params.eleList.map((el, i) => {
@@ -52,6 +52,7 @@ export default (acisData, params) => {
     })
 
     // replace missing values with forecast data
+    replaced = [...replaced, ...new Array(120).fill("M")]
     replaced = params.eleList.map((el, i) => {
       return replaced[i].map((val, t) =>
         val === "M" ? forecastValues[i][t] : val
@@ -62,11 +63,17 @@ export default (acisData, params) => {
   console.log("forecast", replaced)
 
   ///////////////////////////////////////////////////////////////////////////////////////
-  // Shifting and converting data to local time
+  // Shifting and converting data to daylight saving time (DST)
   // ////////////////////////////////////////////////////////////////////////////////////
 
-  // dates go from yyyy-01-01 to dateOfInterest (yyyy-mm-dd)
-  dates = dates.slice(1) // from Jan 1st
+  // dates go from yyyy-01-01 to dateOfInterest (yyyy-mm-dd) plus 5 days if forecast
+  dates = dates.slice(1)
+  // values go from yyyy-01-01 00:00 to dateOfInterest current hour
+  const valuesHourlyShifted = params.eleList.map((el, i) => {
+    return [replaced[i][23], ...replaced[i].slice(24, -1)]
+  })
+  console.log(dates)
+  console.log(valuesHourlyShifted)
 
   // hourlyDates go from yyyy-01-01 00:00 to dateOfInterest (yyyy-mm-dd 23:00)
   const hourlyDates = dates
@@ -81,40 +88,37 @@ export default (acisData, params) => {
       7: "America/Denver",
       8: "America/Los_Angeles",
     }
-    const utcDate = new Date(dateWithHour).toISOString()
-    const localTzo = zonedTimeToUtc(utcDate, {
-      timeZone: "America/New_York",
-    })
-    console.log(i, localTzo, tzo)
-    return localTzo !== tzo ? i : null
+
+    const serverTimezoneDate = format(
+      new Date(dateWithHour),
+      "yyyy-MM-dd HH:00XXX",
+      {
+        timeZone: timeZoneName[Math.abs(tzo)],
+      }
+    )
+    const offset = parseInt(serverTimezoneDate.slice(-6, -3))
+    // console.log(i, dateWithHour, serverTimezoneDate, offset, tzo)
+    return offset === tzo ? null : i
+  })
+  // console.log(arrOFIndeces)
+
+  // indices where daylight saving time is applied
+  const dstIndeces = arrOFIndeces.filter(d => d)
+  // console.log(dstIndeces)
+
+  // console.log(valuesHourlyShifted)
+  // the valuesShifted array has the hour shifted
+  const valuesHourlyDST = params.eleList.map((el, i) => {
+    return valuesHourlyShifted[i].map((v, t) =>
+      t in dstIndeces ? valuesHourlyShifted[i][t + 1] : v
+    )
   })
 
-  // removing null values
-  const indices = arrOFIndeces.filter(d => d)
-
-  // generating the array of objects
-  let hourlyData = []
-  let dailyData = []
-
-  // values go from yyyy-01-01 00:00 to dateOfInterest current hour
-  const valuesHourly = [replaced[23], ...replaced.slice(24, -1)]
-
-  // the valuesShifted array has the hour shifted
-  const valuesHourlyShifted = valuesHourly.map((v, i) =>
-    v in indices ? valuesHourly[i - 1] : v
-  )
+  console.log(valuesHourlyDST)
 
   let left = 0
   let right = 0
-  // values go from yyyy-01-01 00:00 to dateOfInterest current hour
-  const valuesDaily = [...replaced.slice(24)]
-
-  // the valuesShifted array has the hour shifted
-  const valuesDailysShifted = valuesDaily.map((v, i) =>
-    v in indices ? parseInt(valuesDaily[i - 1], 10) : parseInt(v, 10)
-  )
-
-  dates.forEach(date => {
+  const dailyData = dates.map(date => {
     const numOfHours = dailyToHourlyDatesLST(
       startOfDay(new Date(date)),
       endOfDay(new Date(date))
@@ -124,19 +128,28 @@ export default (acisData, params) => {
 
     let p = {}
     p["date"] = date
-    p["temps"] = valuesDailysShifted.slice(left, right)
+
+    params.eleList.forEach((el, t) => {
+      p[el] = valuesHourlyDST[t].slice(left, right)
+    })
 
     left += numOfHours
-    dailyData.push(p)
+    return p
   })
+  console.log(hourlyDates)
+  const hourlyData = [hourlyDates[23], ...hourlyDates.slice(24, -1)].map(
+    hour => {
+      let p = {}
+      p["date"] = format(new Date(hour), "yyyy-MM-dd HH:00XXX", {
+        timeZone: "America/New_York",
+      })
+      params.eleList.forEach((el, t) => {
+        p[el] = parseInt(valuesHourlyDST[t], 10)
+      })
+      return p
+    }
+  )
 
-  hourlyDates.forEach((hour, i) => {
-    let p = {}
-    p["date"] = new Date(hour)
-    p["temp"] = parseInt(valuesHourlyShifted[i], 10)
-    hourlyData.push(p)
-  })
-
-  // console.log(dailyData, hourlyData)
+  console.log(dailyData, hourlyData)
   return { dailyData, hourlyData }
 }

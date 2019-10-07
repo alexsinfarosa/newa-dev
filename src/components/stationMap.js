@@ -79,12 +79,8 @@ export default function StationMap({
         </h3>
       </div>
 
-      <div className="flex-1 flex justify-center items-center">
-        {isError && (
-          <div className="text-center">
-            Unable to place stations on the map...
-          </div>
-        )}
+      <div className="flex-1 flex justify-center items-center bg-green-200">
+        {isError && <div className="w-full text-center">No Data</div>}
 
         {isLoading ? (
           <div className="w-full h-full flex justify-center items-center">
