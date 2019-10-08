@@ -129,6 +129,14 @@ export const averageMissingValues = d => {
   return d
 }
 
+export const addHourToDate = date => {
+  const numOfHours = Array.from(new Array(24).keys())
+  return numOfHours.map(h => {
+    if (h >= 0 && h <= 9) return `${date} 0${h}:00`
+    return `${date} ${h}:00`
+  })
+}
+
 export const dailyToHourlyDatesLST = (sdate, edate) => {
   let startDay = sdate
   let endDay = edate
