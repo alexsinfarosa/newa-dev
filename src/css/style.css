@@ -11,16 +11,6 @@
  */
 @tailwind base;
 
-html * {
-  @apply font-body;
-}
-
-h1,
-h2,
-h4 {
-  @apply font-display;
-}
-
 /**
    * This injects any component classes registered by plugins.
    *

@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCircle, faUser, faSearch } from "@fortawesome/pro-solid-svg-icons"
 
 const linkStyle =
-  "block mr-6 py-1 px-0 font-semibold hover:no-underline tracking-wide hover:text-black"
+  "block mr-6 text-gray-700 py-1 px-0 hover:no-underline tracking-wide hover:opacity-75"
 
 const TopHeader = () => (
   <nav className="flex items-center py-3 px-6 bg-gray-100 text-gray-700">
@@ -26,7 +26,7 @@ const TopHeader = () => (
       <Link
         to="/blog"
         className={linkStyle}
-        activeClassName="text-black border-b border-black"
+        activeClassName="cursor-default border-b border-gray-700 hover:opacity-75"
       >
         NEWA Blog
       </Link>
@@ -34,7 +34,7 @@ const TopHeader = () => (
       <Link
         to="/help"
         className={linkStyle}
-        activeClassName="text-black border-b border-black"
+        activeClassName="cursor-default border-b border-gray-700 hover:opacity-75"
       >
         Get Help
       </Link>
@@ -42,7 +42,7 @@ const TopHeader = () => (
       <Link
         to="/login"
         className={linkStyle}
-        activeClassName="text-black border-b border-black"
+        activeClassName="cursor-default border-b border-gray-700 hover:opacity-75"
       >
         <FontAwesomeIcon icon={faUser} size="lg" className="mr-3" />
         Login/SignUp

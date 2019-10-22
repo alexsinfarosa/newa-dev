@@ -1,10 +1,6 @@
 module.exports = {
   theme: {
     extend: {
-      fontFamily: {
-        display: ["'EB Garamond'", "serif"],
-        body: ["'Nunito Sans'", "sans-serif"],
-      },
       spacing: {
         "80": "20rem",
       },
@@ -22,8 +18,8 @@ module.exports = {
         },
         secondary: {
           100: "#E8F3F9",
-          200: "#B0D6EC",
-          300: "#86BFDF",
+          200: "#C6E1F0",
+          300: "#A3CFE7",
           400: "#5FABD6",
           500: "#1A87C4",
           600: "#177AB0",

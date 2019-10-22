@@ -8,14 +8,13 @@ import Card from "./reusable/card"
 
 const WeatherStationOverview = ({ selectedStation }) => {
   const { data, isLoading, isError } = selectedStation
-  console.log(data, isLoading, isError)
+  // console.log(data, { isLoading }, { isError })
+
   return (
     <Card
-      title={
-        isLoading || isError || !data
-          ? `Weather Station Overview`
-          : data && data.meta.name
-      }
+      title={`${
+        !isLoading && data ? data.station.name : "Weather Station Overview"
+      }`}
       btnLabel="All Details"
       color="primary"
     >
@@ -46,27 +45,32 @@ const WeatherStationOverview = ({ selectedStation }) => {
                         </span>
 
                         <h4 className="mt-2 text-primary-900 font-semibold uppercase tracking-wider">
-                          Summary
+                          {data.darkSky.currently.summary}
                         </h4>
 
                         <div className="mt-3 flex items-center">
                           <FontAwesomeIcon
                             icon={{
                               prefix: "fal",
-                              iconName: `sun`,
+                              iconName: `${MapIcon(
+                                data.darkSky.currently.icon
+                              )}`,
                             }}
                             size="3x"
                             className="text-primary-900"
                           />
 
-                          <h3 className="ml-4 text-4xl font-semibold">?˚F</h3>
+                          <h3 className="ml-4 text-4xl font-semibold">
+                            {data.darkSky.currently.temperature.toPrecision(2)}{" "}
+                            ˚F
+                          </h3>
                         </div>
 
                         <hr className="mt-4 mb-2 border w-48" />
 
                         <div className="flex justify-between">
                           <div className="mr-4 text-secondary-700 font-bold">
-                            Humidity: ?%
+                            Humidity: {data.darkSky.currently.humidity * 100}%
                           </div>
                         </div>
                       </div>
@@ -89,28 +93,28 @@ const WeatherStationOverview = ({ selectedStation }) => {
 
                   {/* Footer */}
                   <div className="flex bg-white">
-                    {["ONE", "TWO", "THREE", "FOUR"].map((day, i) => {
+                    {data.darkSky.daily.data.slice(1, 5).map((day, i) => {
                       return (
-                        <div key={i} className="flex-1 mx-1">
+                        <div key={day.time} className="flex-1 mx-1">
                           <div className="flex-1 justify-center items-center p-2 bg-primary-100 rounded-t-lg">
                             <h3 className="text-sm text-center  tracking-wider text-primary-900 font-semibold ">
-                              {day}
+                              {format(new Date(day.time * 1000), "MMM dd")}
                             </h3>
 
                             <div className="mt-2 flex items-center justify-center">
                               <FontAwesomeIcon
                                 icon={{
                                   prefix: "fal",
-                                  iconName: `sun`,
+                                  iconName: `${MapIcon(day.icon)}`,
                                 }}
                                 size="lg"
                                 className="text-primary-900"
                               />
                               <span className="ml-2 text-sm text-secondary-700 font-bold">
-                                ?˚
+                                {day.temperatureMin.toPrecision(2)}˚
                               </span>
                               <span className="ml-1 text-sm text-red-700 font-bold">
-                                ?˚
+                                {day.temperatureMax.toPrecision(2)}˚
                               </span>
                             </div>
                           </div>
