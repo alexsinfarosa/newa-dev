@@ -1,3 +1,5 @@
+import "typeface-eb-garamond"
+import "typeface-nunito-sans"
 import "./src/css/style.css"
 
 // fontawesome

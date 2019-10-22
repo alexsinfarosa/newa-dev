@@ -81,7 +81,7 @@ export default function StationMap({
     const params = {
       sid: `${stationIdAdjustment(stn)}`,
       sdate: `2019-03-01`,
-      edate: "2019-10-01",
+      edate: "2019-10-22",
       elems: [{ vX: vXDef[stn.network]["temp"] }],
     }
     console.log(params)
