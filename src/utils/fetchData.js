@@ -1,26 +1,27 @@
 import axios from "axios"
-import axiosWithDelimiter from "./axiosWithDelimiter"
-
-import { format, addDays, isSameYear } from "date-fns"
+import { format, addDays } from "date-fns"
 import cleanFetchedData from "./cleanFetchedData"
 
 const protocol = window.location.protocol
+const dateFormat = "YYYY-MM-DD"
 
-const errorFromAcis = data => {
-  const keyList = Object.keys(data)
-  if (keyList.includes("error")) {
-    console.error("ACIS returned an error")
-  }
-  return data
+// Fetch selected station hourly data ---------------------------------------------------
+const url = `${protocol}//data.nrcc.rcc-acis.org/StnData`
+export const fetchCurrentStationHourlyData = params => {
+  return axios
+    .post(url, params)
+    .then(res => res.data)
+    .catch(err => console.log("Failed to load station data ", err))
 }
 
 // Fetch selected station hourly data ---------------------------------------------------
-export const fetchCurrentStationHourlyData = params => {
-  const url = `${protocol}//data.rcc-acis.org/StnData`
-  return axios
-    .post(url, params)
-    .then(res => errorFromAcis(res.data))
-    .catch(err => console.log("Failed to load station data ", err))
+export const fetchCurrentStationHourlyDataNEW = async params => {
+  const url = `${protocol}//data.nrcc.rcc-acis.org/StnData`
+  try {
+    return await axios.post(url, params)
+  } catch (error) {
+    console.log("Failed to load station data ", err)
+  }
 }
 
 // Fetch sister station Id and network -----------------------------------------------------
@@ -36,47 +37,29 @@ const fetchSisterStationIdAndNetwork = params => {
 
 // Fetch sister station hourly data --------------------------------------------------------
 export const fetchSisterStationHourlyData = params => {
-  const url = `${protocol}//data.rcc-acis.org/StnData`
+  const url = `${protocol}//data.nrcc.rcc-acis.org/StnData`
   return axios
     .post(url, params)
-    .then(res => errorFromAcis(res.data))
+    .then(res => res.data)
     .catch(err => console.log("Failed to load sister station data ", err))
 }
 
 // Fetch forecast hourly data --------------------------------------------------------------
-const fetchHourlyForcestData = async params => {
-  const url = `${protocol}//newa2.nrcc.cornell.edu/newaUtil/getFcstData`
+const forecastUrl = `${protocol}//newa2.nrcc.cornell.edu/newaUtil/getFcstData`
+const fetchHourlyForcestData = params => {
   // always need to add 5 days
-  const plusFiveDays = format(addDays(new Date(), 5), "yyyy-MM-dd")
+  const plusFiveDays = format(addDays(new Date(), 5), dateFormat)
   const [id, network] = params.sid.split(" ")
 
-  let req = params.eleList.map(el =>
-    axiosWithDelimiter
-      .get(`${url}/${id}/${network}/${el}/${params.sdate}/${plusFiveDays}`)
-      .then(res => res.data)
-      .catch(err =>
-        console.log(`Failed to load ${el} hourly forecast data`, err)
-      )
-  )
-
-  const data = await Promise.all(req)
-  let results = data[0].data
-
-  data.forEach((el, i) => {
-    if (i > 0) {
-      el.data.forEach((day, t) => {
-        results[t].push(day[1])
-      })
-    }
-  })
-  // console.log(results)
-  return results
+  return axios
+    .get(`${forecastUrl}/${id}/${network}/temp/${params.sdate}/${plusFiveDays}`)
+    .then(res => res.data)
+    .catch(err => console.log("Failed to load hourly forecast data", err))
 }
 
 // Main Function
 export default async params => {
-  // console.log(params)
-  let results = {}
+  const results = new Map()
 
   // get current station hourly data
   const currentStation = await fetchCurrentStationHourlyData(params)
@@ -87,23 +70,22 @@ export default async params => {
   // get sister station hourly data
   let sisParams = { ...params }
   sisParams.sid = sisterStationIdAndNetwork
-
   const sisterStation = await fetchSisterStationHourlyData(sisParams)
 
-  if (isSameYear(new Date(), new Date(params.edate))) {
+  if (params.isThisYear) {
     // get forecast hourly data
     const forecastData = await fetchHourlyForcestData(params)
-    results["forecast"] = forecastData
+    results.set("forecast", forecastData.data)
   }
 
-  results["currentStn"] = currentStation.data
-  results["tzo"] = currentStation.meta.tzo
-  results["sisterStn"] = sisterStation.data
+  results.set("currentStn", currentStation.data)
+  results.set("tzo", currentStation.meta.tzo)
+  results.set("sisterStn", sisterStation.data)
 
   // clean data
-  // console.log(results, params)
+  // console.log(results, params);
   const cleaned = cleanFetchedData(results, params)
 
-  // console.log(cleaned)
+  // console.log(cleaned);
   return cleaned
 }

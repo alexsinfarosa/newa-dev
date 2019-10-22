@@ -72,13 +72,3 @@ h4 {
    * @import "utilities/background-patterns";
    * @import "utilities/skew-transforms";
    */
-
-.hGradient {
-  background-color: #c4dfae;
-  background-image: linear-gradient(
-    90deg,
-    #c4dfae 0%,
-    #ffffff 50%,
-    #c4dfae 100%
-  );
-}

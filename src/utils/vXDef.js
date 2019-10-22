@@ -1,4 +1,4 @@
-export const vXdef = {
+export const vXDef = {
   nwon: {
     pcpn: 5,
     temp: 23,

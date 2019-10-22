@@ -2,17 +2,15 @@ import React from "react"
 
 import "mapbox-gl/dist/mapbox-gl.css"
 import ReactMapGL, { Marker, NavigationControl, Popup } from "react-map-gl"
-// import axios from "axios"
+import axios from "axios"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 import { stationIdAdjustment } from "../utils/utils"
-import vXdef from "../utils/vXdefNEW.json"
+import { vXDef } from "../utils/vXDef"
 import { format } from "date-fns"
 
 import useFetchAllStations from "../utils/hooks/useFetchAllStations"
-import fetchData from "../utils/fetchData"
-import { calculateGdd } from "../utils/utils"
 
 const settings = {
   dragPan: true,
@@ -45,27 +43,30 @@ export default function StationMap({
   const [popupInfo, setPopupInfo] = React.useState(null)
 
   const fetchHourlyData = async stn => {
-    const vX = JSON.parse(JSON.stringify(vXdef)).find(
-      e => e.network === stn.network
-    )
-
+    const url = `${window.location.protocol}//data.nrcc.rcc-acis.org/StnData`
     const params = {
       sid: `${stationIdAdjustment(stn)} ${stn.network}`,
-      sdate: `${new Date().getFullYear() - 1}-12-31`,
+      sdate: `${new Date().getFullYear()}-03-01`,
       edate: `${format(new Date(), "yyyy-MM-dd")}`,
-      meta: "tzo",
-      elems: [{ vX: vX["temp"] }, { vX: vX["rhum"] }],
-      eleList: ["temp", "rhum"],
+      elems: [
+        { vX: vXDef[stn.network]["temp"] },
+        { vX: vXDef[stn.network]["rhum"] },
+      ],
     }
 
     dispatchSelectedStation({ type: "FETCH_INIT" })
     try {
-      const res = await fetchData(params)
-      const payload = calculateGdd(res.dailyData)
-      dispatchSelectedStation({
-        type: "FETCH_SUCCESS",
-        payload,
-      })
+      const station = await axios.post(url, params)
+
+      const keyList = Object.keys(station.data)
+      if (keyList.includes("error")) {
+        dispatchSelectedStation({ type: "FETCH_FAILURE" })
+      } else {
+        dispatchSelectedStation({
+          type: "FETCH_SUCCESS",
+          payload: station.data,
+        })
+      }
     } catch (error) {
       dispatchSelectedStation({ type: "FETCH_FAILURE" })
     }
@@ -79,8 +80,12 @@ export default function StationMap({
         </h3>
       </div>
 
-      <div className="flex-1 flex justify-center items-center bg-green-200">
-        {isError && <div className="w-full text-center">No Data</div>}
+      <div className="flex-1 flex justify-center items-center">
+        {isError && (
+          <div className="text-center">
+            Unable to place stations on the map...
+          </div>
+        )}
 
         {isLoading ? (
           <div className="w-full h-full flex justify-center items-center">
