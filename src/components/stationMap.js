@@ -124,14 +124,14 @@ export default function StationMap({
   }
 
   return (
-    <div className="flex flex-col h-full w-full rounded-lg shadow-lg overflow-hidden">
-      <div className="p-5 bg-primary-300">
-        <h3 className="text-primary-900 text-lg">
+    <div className="flex flex-col h-full w-full rounded-lg shadow-lg overflow-hidden text-left">
+      <div className="p-5 bg-primary-600">
+        <h3 className="text-white text-lg font-semibold tracking-wide">
           Click a map marker to load the station details
         </h3>
       </div>
 
-      <div className="flex-1 flex justify-center items-center">
+      <div className="flex-1 flex justify-center items-center bg-primary-200">
         {allStations.isError && (
           <div className="text-center">
             Unable to place stations on the map...
@@ -152,7 +152,22 @@ export default function StationMap({
             onClick={() => setPopupInfo(null)}
           >
             <div className="relative">
-              <NavigationControl className="absolute right-0 mr-1 mt-1 z-10"></NavigationControl>
+              <div className="absolute flex space-between right-0 mr-6 mt-1 z-10">
+                <div className="bg-white flex flex-col justify-between rounded mr-3 p-3 text-sm text-primary-900 font-semibold">
+                  <div className="">
+                    <FontAwesomeIcon icon="circle"></FontAwesomeIcon>
+                    <span className="ml-2">NEWA Station</span>
+                  </div>
+
+                  <div>
+                    <FontAwesomeIcon icon="plane" rotation={270}></FontAwesomeIcon>
+                    <span className="ml-2">Airport Station</span>
+                  </div>
+                </div>
+                <NavigationControl className=""></NavigationControl>
+              </div>
+              
+
             </div>
 
             {allStations.data.map(stn => {
@@ -208,17 +223,7 @@ export default function StationMap({
         )}
       </div>
 
-      <div className="flex justify-between p-5 text-xs text-primary-900 opacity-75 font-semibold">
-        <div>
-          <FontAwesomeIcon icon="circle"></FontAwesomeIcon>
-          <span className="ml-2">NEWA Station</span>
-        </div>
-
-        <div>
-          <FontAwesomeIcon icon="plane" rotation={270}></FontAwesomeIcon>
-          <span className="ml-2">Airport Station</span>
-        </div>
-      </div>
+      
     </div>
   )
 }

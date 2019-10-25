@@ -72,3 +72,21 @@ h4 {
    * @import "utilities/background-patterns";
    * @import "utilities/skew-transforms";
    */
+.h-300 {
+   height: 300px;
+}
+.h-400 {
+   height: 400px;
+}
+
+.bg-gray-900-40 {
+   background-color: rgba(26, 32, 44, .4);
+}
+
+.bg-gray-900-50 {
+   background-color: rgba(26, 32, 44, .5);
+}
+
+.bg-gray-900-75 {
+   background-color: rgba(26, 32, 44, .75);
+}

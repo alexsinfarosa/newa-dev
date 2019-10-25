@@ -20,10 +20,10 @@ const Layout = ({ children }) => {
     <div>
       <TopHeader siteTitle={data.site.siteMetadata.title} />
 
-      <div className="m-auto" style={{ maxWidth: 1600 }}>
+      <div className="mx-auto">
         <Navigation></Navigation>
       </div>
-      <main className="m-auto" style={{ maxWidth: 1440 }}>
+      <main className="m-auto">
         {children}
       </main>
     </div>

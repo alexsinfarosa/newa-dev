@@ -18,16 +18,15 @@ const Navigation = () => {
             <NewaLogo className="w-64 h-16"></NewaLogo>
           </Link>
         </h1>
-        <div className="text-center">
-          <div className="text-gray-700 font-semibold tracking-widest py-1">
+        <div className="text-left flex mt-2">
+          <div className="inline-block text-gray-700 font-semibold tracking-wider py-2 mr-2">
             in partnership with
           </div>
-          <div className="flex justify-end">
-            <a
+          <a
               href="https://www.psu.edu/"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center"
+              className="flex items-center mr-2"
             >
               <IpmLogo></IpmLogo>
             </a>
@@ -38,9 +37,8 @@ const Navigation = () => {
               rel="noopener noreferrer"
               className="ml-3 flex items-center"
             >
-              <UniversityLogo></UniversityLogo>
+              {/* <UniversityLogo></UniversityLogo> */}
             </a>
-          </div>
         </div>
       </header>
 
@@ -56,7 +54,7 @@ const Navigation = () => {
             className={linkStyle}
             activeClassName={activeStyle}
           >
-            Weather Data
+            Weather Tools
           </Link>
         </li>
         <li className="mr-6">
@@ -65,25 +63,7 @@ const Navigation = () => {
             className={linkStyle}
             activeClassName={activeStyle}
           >
-            Crop & Pest Management
-          </Link>
-        </li>
-        <li className="mr-6">
-          <Link
-            to="/weather-stations"
-            className={linkStyle}
-            activeClassName={activeStyle}
-          >
-            Weather Stations
-          </Link>
-        </li>
-        <li className="mr-0">
-          <Link
-            to="/about-us"
-            className={linkStyle}
-            activeClassName={activeStyle}
-          >
-            About Us
+            Crop &amp; IPM Tools
           </Link>
         </li>
       </ul>

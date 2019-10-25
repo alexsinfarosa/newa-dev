@@ -1,5 +1,6 @@
 import React from "react"
-
+import { Link } from "gatsby"
+ 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
   faSearch,
@@ -18,8 +19,11 @@ import Carousel from "../components/carousel"
 import WeatherStationOverview from "../components/weatherStationOverview"
 import Card from "../components/reusable/card"
 import StationMap from "../components/stationMap"
+import Section from "../components/section"
+import Container from "../components/container"
 
 import { usePosition } from "../utils/hooks/usePosition"
+import LargeButton from "../components/reusable/largeButton"
 
 const IndexPage = () => {
   const [selectedStation, dispatchSelectedStation] = React.useReducer(
@@ -39,67 +43,71 @@ const IndexPage = () => {
       <SEO title="Home" />
 
       {/* carousel section */}
-      <section>
-        <div className="text-center tracking-wider text-2xl py-4 font-light">
-          Your source for <span className="font-normal">weather</span> and{" "}
-          <span className="font-normal">integrated pest management</span> in the
-          North East
-        </div>
-
-        <div>
+      <Section id="" aria="test" classes="flex my-0 text-center text-white bg-primary-600">
+        <Container classes="container mx-auto my8">
+          <div className="text-center tracking-wider text-2xl py-4 font-light">
+            Your source for <span className="font-bold">weather</span> and{" "}
+            <span className="font-bold">integrated pest management</span> in the
+            North East
+          </div>
+        </Container>
+      </Section>
+      <Section id="banner" aria="" classes="flex flex-col my-0 bg-gray-200">
+        <Container classes="container-fluid">
           <Carousel></Carousel>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* search section */}
-      <section className="mt-24 text-center">
-        <h2 className="text-6xl font-semibold text-gray-800">
-          Find a Weather Station
-        </h2>
-        <p className="text-gray-700 text-xl">
-          for up-to-date pest forecasts and weather data
-        </p>
-        <div className="inline-flex list-none relative mt-8">
-          <div className="absolute inset-y-0 left-0 flex items-center pl-3">
-            <FontAwesomeIcon icon={faSearch} className="text-gray-600" />
-          </div>
-          <input
-            type="search"
-            name="search"
-            placeholder="Search by Station or Zipcode"
-            aria-label="Search weather station"
-            className="py-3 pl-10 pr-3 w-80 rounded-full bg-gray-100 focus:outline-none border border-gray-300 placeholder-gray-600 focus:bg-white focus:bg-transparent"
-          ></input>
-        </div>
-      </section>
-
-      {/* <section className="mt-8 px-6 bg-gray-100 ">
-        <code>
-          {JSON.stringify(
-            { latitude, longitude, accuracy: `${accuracy}m`, error },
-            null,
-            2
-          )}
-        </code>
-      </section> */}
-
       {/* station details and map section */}
-      <section className="mt-24 px-6">
-        <div className="flex -mx-6">
+      <Section id="test" aria="test" margin="my-12">
+        <Container>
+          <h2 className="text-6xl font-semibold text-gray-800">
+            Find a Weather Station
+            <span className="block text-gray-700 text-xl">
+              for up-to-date pest forecasts and weather data
+            </span>
+          </h2>
+          
+          <div className="inline-flex list-none relative mt-6">
+            <div className="absolute inset-y-0 left-0 flex items-center pl-3">
+              <FontAwesomeIcon icon={faSearch} className="text-gray-600 ml-2" />
+            </div>
+            <input
+              type="search"
+              name="search"
+              placeholder="Search by zipcode or city, state..."
+              aria-label="Search for a weather station"
+              className="py-3 pl-12 pr-3 w-80 rounded-full bg-gray-100 border-2 border-gray-300 placeholder-gray-700 focus:outline-none focus:bg-white focus:bg-transparent focus:border-primary-300"
+            ></input>
+          </div>
+        </Container>
+        <Container classes="container mx-auto mt-12">
+        <div className="flex flex-col md:flex-row">
           {/* left block */}
-          <div className="w-1/2 px-6">
+          <div className="w-full md:w-1/2 px-3">
+            <StationMap
+              userLat={latitude}
+              userLon={longitude}
+              dispatchSelectedStation={dispatchSelectedStation}
+            ></StationMap>
+          </div>
+
+          {/* right block */}
+          
+          <div className="w-full md:w-1/2 px-3 mt-6 md:mt-0">
             <WeatherStationOverview
               selectedStation={selectedStation}
             ></WeatherStationOverview>
 
-            <div className="mt-10">
+            <div className="mt-6">
               <Card
-                title="Pest & Disease Forecasts"
+                title="Pest &amp; Disease Forecasts"
                 btnLabel="All Reports"
                 color="primary"
               >
                 <div className="p-4 bg-white">
-                  <div className="flex flex-wrap -mx-6 overflow-hidden">
+                  <div className="flex flex-wrap overflow-hidden">
                     {[
                       "Apple Scab",
                       "Fire Blight",
@@ -110,7 +118,7 @@ const IndexPage = () => {
                     ].map((d, i) => (
                       <div
                         key={i}
-                        className="my-1 px-6 w-1/3 px-2 overflow-hidden text-xs text-center font-semibold underline text-primary-700 border-r"
+                        className="my-1 px-3 w-1/3 px-2 overflow-hidden text-xs text-center font-semibold underline text-primary-700 border-r"
                       >
                         {i === 0 ? (
                           <span className="text-red-700 underline">
@@ -127,14 +135,14 @@ const IndexPage = () => {
               </Card>
             </div>
 
-            <div className="mt-10">
+            <div className="mt-6">
               <Card
                 title="Crop Management Tool"
                 btnLabel="All Tools"
                 color="primary"
               >
                 <div className="p-4 bg-white">
-                  <div className="flex flex-wrap -mx-6 overflow-hidden">
+                  <div className="flex flex-wrap overflow-hidden">
                     {[
                       "Apple Freeze Risk",
                       "Blueberry Phenology",
@@ -145,7 +153,7 @@ const IndexPage = () => {
                     ].map((d, i) => (
                       <div
                         key={i}
-                        className="my-1 px-6 w-1/3 px-2 overflow-hidden text-xs text-center font-semibold underline text-primary-700 border-r"
+                        className="my-1 px-3 w-1/3 px-2 overflow-hidden text-xs text-center font-semibold underline text-primary-700 border-r"
                       >
                         <span>{d}</span>
                       </div>
@@ -155,25 +163,30 @@ const IndexPage = () => {
               </Card>
             </div>
           </div>
-
-          {/* right block */}
-          <div className="w-1/2 px-6">
-            <StationMap
-              userLat={latitude}
-              userLon={longitude}
-              dispatchSelectedStation={dispatchSelectedStation}
-            ></StationMap>
-          </div>
+          
         </div>
-      </section>
+
+        </Container>
+      </Section>
+
+      {/* <section className="mt-8 px-6 bg-gray-100 ">
+        <code>
+          {JSON.stringify(
+            { latitude, longitude, accuracy: `${accuracy}m`, error },
+            null,
+            2
+          )}
+        </code>
+      </section> */}
 
       {/* blog section */}
-      <section className="mt-24 p-6 bg-secondary-100">
-        <h2 className="text-6xl font-semibold text-secondary-900 text-center">
+      <Section bgColor="bg-gray-100">
+        <Container padding="py-12">
+        <h2 className="text-4xl font-semibold text-secondary-900 text-center">
           Recent News
         </h2>
 
-        <div className="mt-12 flex flex-wrap -mx-6 overflow-hidden">
+        <div className="mt-6 flex flex-wrap -mx-6 overflow-hidden">
           {[
             "June 19, 2018",
             "September 23, 2018",
@@ -181,9 +194,9 @@ const IndexPage = () => {
             "April 8, 2017",
           ].map((d, i) => {
             return (
-              <div key={i} className="my-6 px-6 w-1/2">
+              <div key={i} className="my-6 px-6 w-full md:w-1/2">
                 <Card title={d} btnLabel="Read Article" color="secondary">
-                  <div className="p-4 bg-white">
+                  <div className="p-6 bg-white">
                     <h3 className="text-secondary-900 text-2xl font-semibold">
                       Lorem ipsum, dolor sit amet consectetur adipisicing elit.
                     </h3>
@@ -199,61 +212,58 @@ const IndexPage = () => {
             )
           })}
 
-          <div className="mt-16 m-auto">
-            <button className="flex items-center py-2 px-4 text-2xl tracking-wider bg-white text-secondary-900 rounded-full border border-secondary-100 hover:border-secondary-200 hover:text-secondary-700">
-              See All News{" "}
-              <span className="ml-3">
-                <FontAwesomeIcon icon={faArrowRight} />
-              </span>
-            </button>
+          <div className="mt-6 m-auto">
+            <LargeButton btnLabel="See All News" color="secondary"></LargeButton>
           </div>
         </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* footer section */}
       <footer>
-        <section className="p-12 mt-16">
-          <h4 className="text-5xl text-center">Disclaimer</h4>
-          <p className=" w-3/5 mt-4 m-auto text-center  leading-relaxed">
-            Accuracy of the weather data is the responsibility of the owners of
-            the weather station instruments. NEWA is not responsible for
-            accuracy of the weather data collected by instruments in the
-            network. If you notice erroneous or missing weather data, contact
-            NEWA and we will contact the owner of the instrument.
-          </p>
-        </section>
-
-        <section className="flex justify-around items-center p-12 mt-16 bg-primary-300 text-primary-900 font-semibold tracking-widest">
-          <span className="border-b border-primary-900">Contact Us</span>
-          <span className="border-b border-primary-900">Partners</span>
-          <span className="border-b border-primary-900">Become a Partner</span>
-          <span className="border-b border-primary-900">About Us</span>
-          <span className="border-b border-primary-900">Press Room</span>
-        </section>
-
-        <section className="p-12 mt-6">
-          <div className="flex flex-wrap -mx-4 overflow-hidden text-gray-700">
-            <div className="my-4 px-4 w-1/3 overflow-hidden">
-              <h4 className="text-4xl font-semibold">Brought to You By:</h4>
+        <Section margin="my-12">
+          <Container>
+            <h4 className="text-4xl font-semibold text-center">Disclaimer</h4>
+            <p className=" w-3/5 mt-4 m-auto text-center  leading-relaxed">
+              Accuracy of the weather data is the responsibility of the owners of
+              the weather station instruments. NEWA is not responsible for
+              accuracy of the weather data collected by instruments in the
+              network. If you notice erroneous or missing weather data, contact
+              NEWA and we will contact the owner of the instrument.
+            </p>
+          </Container>
+        </Section>
+        <Section bgColor="bg-primary-600">
+          <Container classes="container mx-auto py-12 flex justify-around items-center text-white tracking-wider">
+            <Link className="border-b-2 border-white">Contact Us</Link>
+            <Link className="border-b-2 border-white">Partners</Link>
+            <Link className="border-b-2 border-white">Become a Partner</Link>
+            <Link className="border-b-2 border-white">About Us</Link>
+            <Link className="border-b-2 border-white">Press Room</Link>
+          </Container>
+        </Section>
+        <Section margin="my-12">
+          <Container classes="container mx-auto flex flex-wrap text-gray-700">
+            <div className="my-4 pr-12 ">
+              <h4 className="text-left text-3xl font-semibold">Brought to You By:</h4>
             </div>
-
-            <div className="my-4 px-4 w-2/3 overflow-hidden">
+            <div className="my-4 w-auto flex-grow">
               <div className="flex justify-between">
                 {[1, 2, 3, 4, 5].map((d, i) => (
                   <FontAwesomeIcon key={i} size="3x" icon={faUniversity} />
                 ))}
               </div>
             </div>
-          </div>
-        </section>
-
-        <section className="p-12 mt-6 bg-gray-100 text-sm">
-          <div className="flex justify-center items-center">
+          </Container>
+        </Section>
+        <Section bgColor="bg-gray-100">
+          <Container padding="py-12">
+          <div className="flex items-center text-sm">
             <span className="mr-4">
               <FontAwesomeIcon
                 size="3x"
                 icon={faUniversalAccess}
-                className="text-gray-900"
+                className="text-red-700"
               />
             </span>
             <span>
@@ -270,7 +280,7 @@ const IndexPage = () => {
             </span>
           </div>
 
-          <div className="mt-8 flex items-center">
+          <div className="mt-6 flex items-center text-sm">
             <span className="mr-auto">
               © 2009-{new Date().getFullYear()} NYS IPM Program, Cornell
               University
@@ -280,7 +290,9 @@ const IndexPage = () => {
               <span>Admin Login</span>
             </div>
           </div>
-        </section>
+
+          </Container>
+        </Section>
       </footer>
     </Layout>
   )

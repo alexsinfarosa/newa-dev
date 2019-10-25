@@ -10,7 +10,7 @@ const linkStyle =
 const TopHeader = () => (
   <nav className="flex items-center py-3 px-6 bg-gray-100 text-gray-700">
     <div className="flex items-center mr-auto">
-      <b className="mr-1">Website Status</b>
+      <span className="font-bold mr-1">Site Status:</span>
       <FontAwesomeIcon
         icon={faCircle}
         size="xs"
@@ -44,20 +44,20 @@ const TopHeader = () => (
         className={linkStyle}
         activeClassName="text-black border-b border-black"
       >
-        <FontAwesomeIcon icon={faUser} size="lg" className="mr-3" />
-        Login/SignUp
+        <FontAwesomeIcon icon={faUser} size="sm" className="mr-2" />
+        Login or Create Profile
       </Link>
 
       <div className="relative ml-1">
         <div className="absolute inset-y-0 left-0 flex items-center pl-3">
-          <FontAwesomeIcon icon={faSearch} />
+          <FontAwesomeIcon icon={faSearch} className="text-gray-600 ml-2" />
         </div>
         <input
           type="search"
           name="search"
           placeholder="Search..."
           aria-label="Search through site content"
-          className="py-3 pl-10 pr-3 rounded-full placeholder-gray-700 focus:outline-none border border-gray-100 focus:border focus:border-gray-300"
+          className="py-2 pl-12 pr-3 rounded-full placeholder-gray-700 focus:outline-none border-2 border-gray-300 focus:outline-none focus:bg-white focus:bg-transparent focus:border-primary-300"
         ></input>
       </div>
     </div>

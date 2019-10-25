@@ -51,6 +51,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alexsinfarosa/newa-dev"
-  }
+    "url": "git+https://github.com/alexsinfarosa/newa-dev.git"
+  },
+  "bugs": {
+    "url": "https://github.com/alexsinfarosa/newa-dev/issues"
+  },
+  "homepage": "https://github.com/alexsinfarosa/newa-dev#readme",
+  "main": "gatsby-browser.js"
 }
