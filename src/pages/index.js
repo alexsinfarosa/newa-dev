@@ -8,6 +8,7 @@ import {
   faUniversalAccess,
   faEngineWarning,
   faUniversity,
+  faChevronRight
 } from "@fortawesome/pro-regular-svg-icons"
 
 import Layout from "../components/layout"
@@ -64,22 +65,44 @@ const IndexPage = () => {
         <Container>
           <h2 className="text-6xl font-semibold text-gray-800">
             Find a Weather Station
-            <span className="block text-gray-700 text-xl">
-              for up-to-date pest forecasts and weather data
+            <span className="block text-gray-700 text-3xl">
+              for up-to-date IPM forecasts and weather data.
             </span>
           </h2>
-          
-          <div className="inline-flex list-none relative mt-6">
+          <div className="inline-flex list-none mt-6">
+          <form 
+            id="stations-search-form" 
+            role="search" 
+            action=""
+            className="relative">
+            <label for="stations-search-query" class="sr-only">Search:</label>
             <div className="absolute inset-y-0 left-0 flex items-center pl-3">
               <FontAwesomeIcon icon={faSearch} className="text-gray-600 ml-2" />
             </div>
             <input
+              id="stations-search-query"
               type="search"
-              name="search"
+              name="search-stations"
               placeholder="Search by zipcode or city, state..."
+              value=""
+              size="30"
               aria-label="Search for a weather station"
-              className="py-3 pl-12 pr-3 w-80 rounded-full bg-gray-100 border-2 border-gray-300 placeholder-gray-700 focus:outline-none focus:bg-white focus:bg-transparent focus:border-primary-300"
+              className="py-3 px-12 w-auto rounded-full bg-gray-100 border-2 border-gray-300 placeholder-gray-700 focus:outline-none focus:bg-white focus:bg-transparent focus:border-primary-300"
             ></input>
+
+            <button 
+              className="btn btn-primary absolute right-0 items-center px-4"
+              style={{ top: 8 + "px", right: 8 + "px", width:36 + "px", height: 36 + "px"}}
+              name="btnG" 
+              id="staions-search-submit" 
+              type="submit" 
+              value="go">
+              <span class="sr-only">Submit Station Search</span>
+                <FontAwesomeIcon icon={faChevronRight} className="text-lg" />
+            </button>
+          </form>
+            
+            
           </div>
         </Container>
         <Container classes="container mx-auto mt-12">
@@ -213,7 +236,7 @@ const IndexPage = () => {
           })}
 
           <div className="mt-6 m-auto">
-            <LargeButton btnLabel="See All News" color="secondary"></LargeButton>
+            <a href="#" class="btn btn-secondary btn-large">See All News</a>
           </div>
         </div>
         </Container>

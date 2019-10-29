@@ -125,9 +125,9 @@ export default function StationMap({
 
   return (
     <div className="flex flex-col h-full w-full rounded-lg shadow-lg overflow-hidden text-left">
-      <div className="p-5 bg-primary-600">
+      <div className="py-4 px-6 bg-primary-600">
         <h3 className="text-white text-lg font-semibold tracking-wide">
-          Click a map marker to load the station details
+          Click or tap on a map marker for the weather overview.
         </h3>
       </div>
 
@@ -151,9 +151,9 @@ export default function StationMap({
             onViewportChange={viewport => setViewport(viewport)}
             onClick={() => setPopupInfo(null)}
           >
-            <div className="relative">
-              <div className="absolute flex space-between right-0 mr-6 mt-1 z-10">
-                <div className="bg-white flex flex-col justify-between rounded mr-3 p-3 text-sm text-primary-900 font-semibold">
+            <div className="relative p-6 h-full flex justify-end">
+              <div className="absolute flex space-between z-10">
+                <div className="bg-white flex flex-col justify-between rounded shadow mr-3 p-3 text-sm text-primary-900 font-semibold">
                   <div className="">
                     <FontAwesomeIcon icon="circle"></FontAwesomeIcon>
                     <span className="ml-2">NEWA Station</span>
@@ -164,7 +164,7 @@ export default function StationMap({
                     <span className="ml-2">Airport Station</span>
                   </div>
                 </div>
-                <NavigationControl className=""></NavigationControl>
+                <NavigationControl className="shadow"></NavigationControl>
               </div>
               
 

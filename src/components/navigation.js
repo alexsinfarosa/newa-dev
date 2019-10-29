@@ -6,8 +6,8 @@ import IpmLogo from "./imageComponents/ipmLogo"
 import UniversityLogo from "./imageComponents/universityLogo"
 
 const linkStyle =
-  "text-gray-700 font-semibold text-lg py-1 px-0 bg-white hover:no-underline hover:text-black tracking-wide"
-const activeStyle = "text-black border-b border-black"
+  "text-primary-600 font-semibold text-lg py-1 px-0 bg-white hover:text-primary--600 hover:border-b-2 hover:border-primary-600 tracking-wide"
+const activeStyle = "text-black border-b-2 border-primary-600"
 
 const Navigation = () => {
   return (
